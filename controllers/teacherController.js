@@ -1,12 +1,12 @@
 exports.showTeacherList = (req, res, next) => {
-    res.render('student/Students', { navLocation: 'student' });
+    res.render('teacher/Teachers', { navLocation: 'teacher' });
 }
 exports.showAddTeacherForm = (req, res, next) => {
-    res.render('student/Student-Add-Form', { navLocation: 'student' });
+    res.render('teacher/Teacher-Add-Form', { navLocation: 'teacher' });
 }
 exports.showTeacherDetails = (req, res, next) => {
-    res.render('student/Student-Details', { navLocation: 'student' });
+    res.render('teacher/Teacher-Details', { navLocation: 'teacher' });
 }
 exports.showTeacherEdit = (req, res, next) => {
-    res.render('student/Edit-Student-Table', { navLocation: 'student' });
+    res.render('teacher/Edit-Teacher-Table', { navLocation: 'teacher' });
 }
