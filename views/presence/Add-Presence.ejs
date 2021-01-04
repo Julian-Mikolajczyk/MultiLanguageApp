@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pl-PL">
+<link rel="stylesheet" href="./css/style.css" />
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Szkoła językowa MultiLanguage</title>
+<script type="application/javascript" src="./js/validation-presence-add-form.js"></script>
+<script type="application/javascript" src="./js/validationCommon.js"></script>
+
+<body>
+    <header>
+        <a href="./index.html">
+            <img src="./images/logo.png" alt="Szkoła językowa MultiLanguage Logo" class="center">
+        </a>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="./index.html">Home</a></li>
+            <li><a href="./Students.html">Students</a></li>
+            <li><a href="./Teachers.html">Teachers</a></li>
+            <li><a href="./Lessons.html">Lessons</a></li>
+            <li><a href="./Presences.html" class="active">Presences</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h2 style="text-align: left;">Lesson details</h2>
+        <form class="form" style="justify-content: left;" novalidate onsubmit="return validateForm();">
+            <label for="Topic">Select Lesson</label>
+            <select id="Topic">
+                <option value="0">Select Topic:</option>
+                <option value="1">Usa Elections (10:15-11:45)</option>
+                <option value="2">Adjectives (12:15-13:45)</option>
+                <option value="3">Nouns (8:30-11:45)</option>
+                <option value="4">Ford Company (15:45-17:15)</option>
+                <option value="5">Will we surive the future? (8:30-10:15)</option>
+            </select>
+            <span id="errorLesson" class="errors-text"></span>
+        </form>
+        <h2 style="text-align: left;">Presence Informations</h2>
+        <form class="form" novalidate onsubmit="return validateForm();" style="justify-content: left;">
+            <label for="StudentID">Select Student</label>
+            <select id="StudentID">
+                <option value="0">Select Student</option>
+                <option value="1">Mikołaj Kowalski</option>
+                <option value="2">Julian Mikołajczyk</option>
+                <option value="3">Aneta Bidzińska</option>
+                <option value="4">Michał Twardy</option>
+                <option value="5">Karol Wiśniewski</option>
+            </select>
+            <span id="errorStudent" class="errors-text"></span>
+
+            <label for="Ispresent">Is Present?:</label>
+            <input type="checkbox" name="Ispresent" id="Ispresent" />
+            <span></span>
+
+            <label for="Reason">Reason:</label>
+            <input type="text" style="min-height: 100px;" name="Reason" id="Reason"
+                placeholder="Leave empty if present" />
+            <span></span>
+            <div class="form-buttons">
+                <p id="errorsSummary" class="errors-text"></p>
+                <input type="submit" class="form-button-submit" value="Add" />
+                <a href="./index.html" class="form-button-cancel">Back</a>
+            </div>
+        </form>
+
+
+
+    </main>
+    <footer>
+        Julian,Mikołajczyk,s18734
+    </footer>
+
+</body>
+
+</html>

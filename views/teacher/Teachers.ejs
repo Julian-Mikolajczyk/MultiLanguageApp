@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pl-PL">
+<link rel="stylesheet" href="./css/style.css" />
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Szkoła językowa MultiLanguage</title>
+
+
+<body>
+    <header>
+        <a href="./index.html">
+            <img src="./images/logo.png" alt="Szkoła językowa MultiLanguage Logo" class="center">
+        </a>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="./index.html">Home</a></li>
+            <li><a href="./Students.html">Students</a></li>
+            <li><a href="./Teachers.html" class="active">Teachers</a></li>
+            <li><a href="./Lessons.html">Lessons</a></li>
+            <li><a href="./Presences.html">Presences</a></li>
+        </ul>
+    </nav>
+
+    <main>
+
+        <table class="table">
+            <thead class="table-nav">
+
+                <tr>
+                    <th class="table-nav-cell">Name</th>
+                    <th class="table-nav-cell">Surname</th>
+                    <th class="table-nav-cell">Salary</th>
+                    <th class="table-nav-cell">HireDate</th>
+                    <th class="table-nav-cell">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="table-body">
+                    <td>Jan</td>
+                    <td>Nowak</td>
+                    <td>3500</td>
+                    <td>07-02-2010</td>
+                    <td class="dropdown">
+                        <button class="dropbtn">Details</button>
+                        <div class="dropdown-content">
+                            <a href="./Teacher-Details.html" class="list-actions-button-details">Profile
+                                Informations</a>
+                            <a href="./Edit-Teacher-Table.html" class="list-actions-button-edit">Edit</a>
+                            <a href="" class="list-actions-button-delete">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Janina</td>
+                    <td>Nowacka</td>
+                    <td>3700</td>
+                    <td>05-10-2013</td>
+                    <td class="dropdown">
+                        <button class="dropbtn">Details</button>
+                        <div class="dropdown-content">
+                            <a href="./Teacher-Details.html" class="list-actions-button-details">Profile
+                                Informations</a>
+                            <a href="./Edit-Teacher-Table.html" class="list-actions-button-edit">Edit</a>
+                            <a href="" class="list-actions-button-delete">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div>
+            <a href="./Teacher-Add-Form.html" class="button-add">Add New Teacher</a>
+        </div>
+
+    </main>
+    <footer>
+        Julian, Mikołajczyk, s18734
+    </footer>
+
+</body>
+
+</html>

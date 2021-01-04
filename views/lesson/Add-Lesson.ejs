@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pl-PL">
+<link rel="stylesheet" href="./css/style.css" />
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ACME HR Department</title>
+
+<head>
+    <script type="application/javascript" src="./js/validation-lesson-add-form.js"></script>
+    <script type="application/javascript" src="./js/validationCommon.js"></script>
+</head>
+
+<body>
+    <header>
+        <a href="./index.html">
+            <img src="./images/logo.png" alt="Szkoła językowa MultiLanguage Logo" class="center">
+        </a>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="./index.html">Home</a></li>
+            <li><a href="./Students.html">Students</a></li>
+            <li><a href="./Teachers.html">Teachers</a></li>
+            <li><a href="./Lessons.html" class="active">Lessons</a></li>
+            <li><a href="./Presences.html">Presences</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h2 style="text-align: center;">Add new Lesson</h2>
+        <form class="form" novalidate onsubmit="return validateForm();">
+            <label for="TeacherName">Teacher Name:</label>
+            <select id="TeacherName">
+                <option value="0">Select Teacher:</option>
+                <option value="1">Jacek Kurski</option>
+                <option value="2">Andrzej Nowy</option>
+                <option value="3">Elżbieta Miła</option>
+            </select>
+            <span id="errorTeacherName" class="errors-text"></span>
+
+            <label for="Date">Date:</label>
+            <input type="date" name="Date" id="Date" />
+            <span id="errorDate" class="errors-text"></span>
+
+            <label for="StartTime">Start Time:</label>
+            <!-- <input type="text" name="StartTime" id="StartTime" /> -->
+            <select id="StartTime">
+                <option value="0">Select Start Time:</option>
+                <option value="1">8:30</option>
+                <option value="2">10:15</option>
+                <option value="3">12:15</option>
+                <option value="1">14:00</option>
+                <option value="2">15:45</option>
+                <option value="3">17:30</option>
+            </select>
+            <span id="errorStartTime" class="errors-text"></span>
+
+            <label for="EndTime">End Time:</label>
+            <!-- <input type="text" name="EndTime" id="EndTime" /> -->
+            <select id="EndTime">
+                <option value="0">Select End Time:</option>
+                <option value="1">10:00</option>
+                <option value="2">11:45</option>
+                <option value="3">13:45</option>
+                <option value="1">15:30</option>
+                <option value="2">17:15</option>
+                <option value="3">19:00</option>
+            </select>
+            <span id="errorEndTime" class="errors-text"></span>
+
+            <label for="Topic">Topic:</label>
+            <input type="text" name="Topic" id="Topic" />
+            <span id="errorTopic" class="errors-text"></span>
+
+            <label for="ClassroomNr">Classroom Nr:</label>
+            <!-- <input type="text" name="ClassroomNr" id="ClassroomNr" /> -->
+            <select id="ClassroomNr">
+                <option value="0">Select Classroom:</option>
+                <option value="1">1B</option>
+                <option value="2">217c</option>
+                <option value="3">22b</option>
+                <option value="1">107A</option>
+            </select>
+            <span id="errorClassroomNr" class="errors-text"></span>
+
+            <div class="form-buttons">
+                <p id="errorsSummary" class="errors-text"></p>
+                <input type="submit" class="form-button-submit" value="Add" />
+                <a href="./index.html" class="form-button-cancel">Back</a>
+            </div>
+        </form>
+
+    </main>
+    <footer>
+        Julian,Mikołajczyk,s18734
+    </footer>
+
+</body>
+
+</html>

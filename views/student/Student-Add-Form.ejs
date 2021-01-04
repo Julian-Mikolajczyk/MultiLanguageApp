@@ -1,0 +1,25 @@
+<%- include('../fragments/header.ejs') %>
+    <main>
+        <h2 style="text-align: center;">Add New Student</h2>
+        <form class="form" novalidate onsubmit="return validateForm();">
+            <label for="firstName">Name:<sup>*</sup></label>
+            <input type="text" class="required length" name="firstName" id="firstName" placeholder="2-60 znaków" />
+            <span id="errorFirstName" class="errors-text"></span>
+            <label for="lastName">Surname:<sup>*</sup></label>
+            <input type="text" name="lastName" id="lastName" placeholder="2-60 znaków" />
+            <span id="errorLastName" class="errors-text"></span>
+            <label for="PESEL">PESEL:<sup>*</sup></label>
+            <input type="text" name="PESEL" id="PESEL" />
+            <span id="errorPESEL" class="errors-text"></span>
+            <label for="Email">E-mail:<sup>*</sup></label>
+            <input type="email" name="Email" id="Email" placeholder="np. abc@mail.com" />
+            <span id="errorEmail" class="errors-text"></span>
+            <div class="form-buttons">
+                <p id="errorsSummary" class="errors-text"></p>
+                <input type="submit" class="form-button-submit" value="Add" />
+                <a href="./index.html" class="form-button-cancel">Back</a>
+            </div>
+        </form>
+
+    </main>
+    <%- include('../fragments/footer.ejs') %>

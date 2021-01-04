@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pl-PL">
+<link rel="stylesheet" href="./css/style.css" />
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Szkoła Językowa Multilanguage</title>
+
+
+<body>
+    <header>
+        <a href="./index.html">
+            <img src="./images/logo.png" alt="Szkoła językowa MultiLanguage Logo" class="center">
+        </a>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="./index.html">Home</a></li>
+            <li><a href="./Students.html">Students</a></li>
+            <li><a href="./Teachers.html" class="active">Teachers</a></li>
+            <li><a href="./Lessons.html">Lessons</a></li>
+            <li><a href="./Presences.html">Presences</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h2 style="text-align: center;">Edit Teacher's information</h2>
+        <form class="form">
+            <label for="TeacherID">TeacherID:</label>
+            <input type="text" name="TeacherID" value="1" id="TeacherID" disabled />
+            <label for="firstName">Name:</label>
+            <input type="text" name="firstName" value="Julian" id="firstName" disabled />
+            <label for="lastName">Surname:</label>
+            <input type="text" name="lastName" value="Mikołajczyk" id="lastName" disabled />
+            <label for="Salary">Salary:</label>
+            <input type="number" name="Salary" value="3500" id="Salary" disabled />
+            <label for="HireDate">HireDate:</label>
+            <input type="date" name="HireDate" value="2010-02-07" id="HireDate" disabled />
+
+            <div class="form-buttons">
+                <input type="submit" class="form-button-submit" value="Edit" />
+                <a href="./index.html" class="form-button-cancel">Back</a>
+            </div>
+        </form>
+
+    </main>
+    <footer>
+        Imię, nazwisko, numer studencki
+    </footer>
+
+</body>
+
+</html>

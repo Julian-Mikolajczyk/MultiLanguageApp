@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pl-PL">
+<link rel="stylesheet" href="./css/style.css" />
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Szkoła językowa MultiLanguage</title>
+<script type="application/javascript" src="./js/validation-teacher-add-form.js"></script>
+<script type="application/javascript" src="./js/validationCommon.js"></script>
+
+<body>
+    <header>
+        <a href="./index.html">
+            <img src="./images/logo.png" alt="Szkoła językowa MultiLanguage Logo" class="center">
+        </a>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="./index.html">Home</a></li>
+            <li><a href="./Students.html">Students</a></li>
+            <li><a href="./Teachers.html" class="active">Teachers</a></li>
+            <li><a href="./Lessons.html">Lessons</a></li>
+            <li><a href="./Presences.html">Presences</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h2 style="text-align: center;">Add New Teacher</h2>
+        <form class="form" novalidate onsubmit="return validateForm();">
+            <label for="firstName">Name:<sup>*</sup></label>
+            <input type="text" name="firstName" id="firstName" placeholder="2-60 znaków" />
+            <span id="errorFirstName" class="errors-text"></span>
+
+            <label for="lastName">Surname:<sup>*</sup></label>
+            <input type="text" name="lastName" id="lastName" placeholder="2-60 znaków" />
+            <span id="errorLastName" class="errors-text"></span>
+
+            <label for="Salary">Salary:<sup>*</sup></label>
+            <input type="text" name="Salary" id="Salary" placeholder="np. 3000" />
+            <span id="errorSalary" class="errors-text"></span>
+
+            <label for="HireDate">HireDate:<sup>*</sup></label>
+            <input type="text" name="HireDate" id="HireDate" placeholder="np 2020-10-10" />
+            <span id="errorDate" class="errors-text"></span>
+
+            <div class="form-buttons">
+                <p id="errorsSummary" class="errors-text"></p>
+                <input type="submit" class="form-button-submit" value="Add" />
+                <a href="./index.html" class="form-button-cancel">Back</a>
+            </div>
+        </form>
+
+    </main>
+    <footer>
+        Julian Mikołajczyk s18734
+    </footer>
+
+</body>
+
+</html>
