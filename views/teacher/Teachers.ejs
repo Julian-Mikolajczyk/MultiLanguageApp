@@ -12,22 +12,31 @@
                 </tr>
             </thead>
             <tbody>
-                <tr class="table-body">
-                    <td>Jan</td>
-                    <td>Nowak</td>
-                    <td>3500</td>
-                    <td>07-02-2010</td>
-                    <td class="dropdown">
-                        <button class="dropbtn">Details</button>
-                        <div class="dropdown-content">
-                            <a href="teachers/details/1" class="list-actions-button-details">Profile
-                                Informations</a>
-                            <a href="teachers/edit" class="list-actions-button-edit">Edit</a>
-                            <a href="" class="list-actions-button-delete">Delete</a>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
+                <% for (let t of teachs) { %>
+                    <tr class="table-body">
+                        <td>
+                            <%= t.name %>
+                        </td>
+                        <td>
+                            <%= t.surname %>
+                        </td>
+                        <td>
+                            <%= t.salary %>
+                        </td>
+                        <td>
+                            <%= t.hiredate.toISOString().split('T')[0] %>
+                        </td>
+                        <td class="dropdown">
+                            <button class="dropbtn">Details</button>
+                            <div class="dropdown-content">
+                                <a href="Teachers/details/<%=t._id%>" class="list-actions-button-details">Profile
+                                    Informations</a>
+                                <a href="Teachers/edit/<%=t._id%>" class="list-actions-button-edit">Edit</a>
+                                <a href="Teachers/delete/<%=t._id%>" class="list-actions-button-delete">Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- <tr>
                     <td>Janina</td>
                     <td>Nowacka</td>
                     <td>3700</td>
@@ -41,7 +50,8 @@
                             <a href="" class="list-actions-button-delete">Delete</a>
                         </div>
                     </td>
-                </tr>
+                </tr> -->
+                    <% } %>
             </tbody>
         </table>
         <div>

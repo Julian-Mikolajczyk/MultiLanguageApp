@@ -40,10 +40,10 @@ app.use('/api/students', studentApiRouter);
 app.use('/api/teachers', teacherApiRouter);
 app.use('/api/lessons', lessonApiRouter);
 app.use('/api/presences', presenceApiRouter);
-// app.use('/students', studentRouter);
-// app.use('/teachers', teacherRouter);
-// app.use('/presences', presenceRouter);
-// app.use('/lessons', lessonRouter);
+app.use('/students', studentRouter);
+app.use('/teachers', teacherRouter);
+app.use('/presences', presenceRouter);
+app.use('/lessons', lessonRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

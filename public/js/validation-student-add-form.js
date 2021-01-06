@@ -1,9 +1,8 @@
 function validateForm() {
-
-    const teacherNameInput = document.getElementById('TeacherName');
-    const lastNameInput = document.getElementById('lastName');
+    const firstNameInput = document.getElementById('name');
+    const lastNameInput = document.getElementById('surname');
     const PESELInput = document.getElementById('PESEL');
-    const emailInput = document.getElementById('Email');
+    const emailInput = document.getElementById('email');
 
 
     const errorFirstName = document.getElementById('errorFirstName');
@@ -15,7 +14,6 @@ function validateForm() {
     resetErrors([firstNameInput, lastNameInput, emailInput, PESELInput], [errorFirstName, errorLastName, errorEmail, errorPESEL], errorsSummary);
     let valid = true;
 
-
     if (!checkRequired(firstNameInput.value)) {
         valid = false;
         firstNameInput.classList.add("error-input");
@@ -24,6 +22,10 @@ function validateForm() {
         valid = false;
         firstNameInput.classList.add("error-input");
         errorFirstName.innerText = "Pole powinno zawierać od 2 do 100 znaków";
+    } else if (!isAlpha(firstNameInput.value)) {
+        valid = false;
+        firstNameInput.classList.add("error-input");
+        errorFirstName.innerText = "Pole może składać się tylko ze znaków alfabetu angielskiego";
     }
 
     if (!checkRequired(lastNameInput.value)) {
@@ -35,6 +37,13 @@ function validateForm() {
         lastNameInput.classList.add("error-input");
         errorLastName.innerText = "Pole powinno zawierać od 2 do 100 znaków";
     }
+    else if (!isAlpha(lastNameInput.value)) {
+        valid = false;
+        lastNameInput.classList.add("error-input");
+        errorLastName.innerText = "Pole może składać się tylko ze znaków alfabetu angielskiego";
+    }
+
+    debugger;
     if (!checkRequired(PESELInput.value)) {
         valid = false;
         PESELInput.classList.add("error-input");
@@ -44,6 +53,17 @@ function validateForm() {
         PESELInput.classList.add("error-input");
         errorPESEL.innerText = "Pole powinno zawierać 11 znaków";
     }
+    else if (!isNumeric(PESELInput.value)) {
+        valid = false;
+        PESELInput.classList.add("error-input");
+        errorPESEL.innerText = "Pole może składać się tylko z cyfer";
+    }
+
+    // else if (exist(PESELInput.value)) {
+    //     valid = false;
+    //     PESELInput.classList.add("error-input");
+    //     errorPESEL.innerText = "Taki PESEL istnieje już w bazie danych";
+    // }
 
 
     if (!checkRequired(emailInput.value)) {

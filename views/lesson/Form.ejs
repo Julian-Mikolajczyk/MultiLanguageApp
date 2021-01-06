@@ -1,0 +1,117 @@
+<%- include('../fragments/header.ejs') %>
+    <script type="application/javascript" src="/js/validation-lesson-add-form.js"></script>
+    <script type="application/javascript" src="/js/validationCommon.js"></script>
+    <main>
+
+        <h2 <%=(formMode=='createNew' ) ? 'style=text-align:center;' : 'style=text-align:left;' %> />
+            <%= pageTitle %>
+        </h2>
+        <form class="form" method="post" action="<%=formAction%>" novalidate onsubmit="return validateForm();"
+            <%=(formMode=='createNew' ) ? 'style=justify-content:center;' : 'style=justify-content:left;' %> />
+
+            <input type="hidden" name="_id" value="<%= lessons._id %>">
+
+
+            <label for="teacher_id">Teacher Name:</label>
+            <select id="teacher_id" name="teacher_id" required <%=(formMode=='showDetails' ) ? 'disabled' : '' %> >
+                <option value="" selected>--- Select the Teacher ---</option>
+                <% for (let i=0; i<allteach.length; i++) { let teach=allteach[i]; %>
+                    <option value="<%= teach._id %>" label="<%= teach.name + ' ' + teach.surname %>" <%=(lessons._id &&
+                        teach._id.toString()==lessons.teacher_id.toString()) ? 'selected' : '' %>></option>
+                    <% } %>
+            </select>
+            <span id="errorTeacherName" class="errors-text"></span>
+            <label for="Date">Date:</label>
+            <input type="date" name="date" id="date" value="<%= lessons.date %>" <%=(formMode=='showDetails' )
+                ? 'disabled' : '' %>/>
+            <span id="errorDate" class="errors-text"></span>
+
+            <label for="starttime">Start Time:</label>
+            <input type="text" name="starttime" id="starttime" placeholder="eg. 10:15" value="<%= lessons.starttime %>"
+                <%=(formMode=='showDetails' ) ? 'disabled' : '' %>/>
+            <span id="errorStartTime" class="errors-text"></span>
+
+            <label for="endtime">End Time:</label>
+            <input type="text" name="endtime" id="endtime" placeholder="eg. 11:45" value="<%= lessons.endtime %>"
+                <%=(formMode=='showDetails' ) ? 'disabled' : '' %>/>
+            <span id="errorEndTime" class="errors-text"></span>
+
+            <label for="topic">Topic:</label>
+            <input type="text" name="topic" id="topic" placeholder="eg. Verbs" value="<%= lessons.topic %>"
+                <%=(formMode=='showDetails' ) ? 'disabled' : '' %> />
+            <span id="errorTopic" class="errors-text"></span>
+
+            <label for="classroomnr">Classroom Nr:</label>
+            <input type="email" name="classroomnr" id="classroomnr" placeholder="eg. 2B"
+                value="<%= lessons.classroomnr %>" <%=(formMode=='showDetails' ) ? 'disabled' : '' %> />
+            <span id="errorClassroomNr" class="errors-text"></span>
+
+            <p id="errorsSummary" style="margin-block-start: 0em;
+            margin-block-end: 0em;" class="errors-text"></p>
+            <% if (formMode !='showDetails' ) { %>
+                <div class="form-buttons">
+                    <input class="form-button-submit" type="submit" value="<%=btnLabel%>" />
+                    <a class="form-button-cancel" href="/Lessons">Back</a>
+                </div>
+                <% } else { %>
+                    <div class="form-buttons">
+                        <a href="/lessons/edit/<%= lessons._id %>" class="form-button-submit">Edit</a>
+                        <a class="form-button-cancel" href="/Lessons">Back</a>
+                    </div>
+                    <% } %>
+        </form>
+        <% if (formMode=='showDetails' || formMode=='edit' ) { %>
+            <h2>Teacher's Details</h2>
+            <table class="presences-table">
+                <thead class="table-nav">
+                    <tr>
+                        <th class="table-nav-cell">Teacher's Name</th>
+                        <th class="table-nav-cell">Teacher's Surname</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="table-body">
+                        <td class="presences-table-cell">
+                            <%= lessons.teacher.name%>
+                        </td>
+                        <td class="presences-table-cell">
+                            <%= lessons.teacher.surname%>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Students Details</h2>
+            <table class="presences-table">
+                <thead class="table-nav">
+                    <tr>
+                        <th class="table-nav-cell">Student's Name</th>
+                        <th class="table-nav-cell">Student's Surname</th>
+                        <th class="table-nav-cell">Was Present</th>
+                        <th class="table-nav-cell">Reason</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for (let l of lessons.presences) { %>
+                        <tr class="table-body">
+                            <td class="presences-table-cell">
+                                <%= l.student.name %>
+                            </td>
+                            <td class="presences-table-cell">
+                                <%= l.student.surname %>
+                            </td>
+                            <td class="presences-table-cell">
+                                <%= l.isabsent %>
+                            </td>
+                            <td class="presences-table-cell">
+                                <%= l.absenceReason %>
+                            </td>
+                        </tr>
+                        <% } %>
+                </tbody>
+            </table>
+            <% } %>
+    </main>
+    <%- include('../fragments/footer.ejs') %>

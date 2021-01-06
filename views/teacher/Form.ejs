@@ -1,0 +1,72 @@
+<%- include('../fragments/header.ejs') %>
+    <script type="application/javascript" src="/js/validation-teacher-add-form.js"></script>
+    <script type="application/javascript" src="/js/validationCommon.js"></script>
+    <main>
+
+        <h2 <%=(formMode=='createNew' ) ? 'style=text-align:center;' : 'style=text-align:left;' %> />
+            <%= pageTitle %>
+        </h2>
+        <form class="form" method="post" action="<%=formAction%>" novalidate onsubmit="return validateForm();"
+            <%=(formMode=='createNew' ) ? 'style=justify-content:center;' : 'style=justify-content:left;' %> />
+
+            <input type="hidden" name="_id" value="<%= teach._id %>">
+            <label for="name">Name:</label>
+            <input type="text" name="name" id="name" placeholder="2-60 znaków" value="<%= teach.name %>"
+                <%=(formMode=='showDetails' ) ? 'disabled' : '' %>/>
+            <span id="errorFirstName" class="errors-text"></span>
+            <label for="surname">Surname:</label>
+            <input type="text" name="surname" id="surname" placeholder="2-60 znaków" value="<%= teach.surname %>"
+                <%=(formMode=='showDetails' ) ? 'disabled' : '' %>/>
+            <span id="errorLastName" class="errors-text"></span>
+            <label for="salary">Salary:</label>
+            <input type="text" name="salary" id="salary" value="<%= teach.salary %>" <%=(formMode=='showDetails' )
+                ? 'disabled' : '' %> />
+            <span id="errorSalary" class="errors-text"></span>
+            <label for="hiredate">HireDate:</label>
+            <input type="date" name="hiredate" id="hiredate" placeholder="np. 2020-10-10" value="<%= teach.hiredate %>"
+                <%=(formMode=='showDetails' ) ? 'disabled' : '' %> />
+            <span id="errorDate" class="errors-text"></span>
+            <p id="errorsSummary" style="margin-block-start: 0em;
+            margin-block-end: 0em;" class="errors-text"></p>
+            <% if (formMode !='showDetails' ) { %>
+                <div class="form-buttons">
+                    <input class="form-button-submit" type="submit" value="<%=btnLabel%>" />
+                    <a class="form-button-cancel" href="/teachers">Back</a>
+                </div>
+                <% } else { %>
+                    <div class="form-buttons">
+                        <a href="/teachers/edit/<%= teach._id %>" class="form-button-submit">Edit</a>
+                        <a class="form-button-cancel" href="/teachers">Back</a>
+                    </div>
+                    <% } %>
+        </form>
+        <% if (formMode=='showDetails' || formMode=='edit' ) { %>
+            <h2>Teacher Lessons</h2>
+
+            <table class="presences-table" style="min-width: 40%;">
+                <thead class="table-nav">
+                    <tr>
+                        <th class="table-nav-cell">Lesson ID</th>
+                        <th class="table-nav-cell">Date</th>
+                        <th class="table-nav-cell">Topic</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for (let l of teach.lessons) { %>
+                        <tr class="table-body">
+                            <td class="presences-table-cell">
+                                <%= l._id %>
+                            </td>
+                            <td class="presences-table-cell">
+                                <%= l.date.toISOString().split('T')[0] %>
+                            </td>
+                            <td class="presences-table-cell">
+                                <%= l.topic %>
+                            </td>
+                        </tr>
+                        <% } %>
+                </tbody>
+            </table>
+            <% } %>
+    </main>
+    <%- include('../fragments/footer.ejs') %>

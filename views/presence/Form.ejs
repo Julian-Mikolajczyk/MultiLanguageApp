@@ -1,0 +1,68 @@
+<%- include('../fragments/header.ejs') %>
+    <script type="application/javascript" src="/js/validation-presence-add-form.js"></script>
+    <script type="application/javascript" src="/js/validationCommon.js"></script>
+    <main>
+
+        <h2 <%=(formMode=='createNew' ) ? 'style=text-align:center;' : 'style=text-align:left;' %> />
+            <%= pageTitle %>
+        </h2>
+        <form class="form" method="post" action="<%=formAction%>" novalidate onsubmit="return validateForm();"
+            <%=(formMode=='createNew' ) ? 'style=justify-content:center;' : 'style=justify-content:left;' %> />
+
+            <input type="hidden" name="_id" value="<%= pres._id %>">
+
+
+            <label for="lesson_id">Lesson Details:</label>
+            <select id="lesson_id" name="lesson_id" required <%=(formMode=='showDetails' ) ? 'disabled' : '' %> >
+                <option value="" selected>
+                    <%=(formMode=='showDetails') ? pres.lesson.topic + ' (' +
+                        pres.lesson.date.toISOString().split('T')[0] + ')' : '--- Select Lesson ---' %>
+                </option>
+                <% for (let i=0; i<alllessons.length; i++) { let less=alllessons[i]; %>
+                    <option value="<%= less._id %>"
+                        label="<%= less.topic + ' (' + less.date.toISOString().split('T')[0] + ')' %>" <%=(pres._id &&
+                        less._id.toString()==pres.lesson_id.toString()) ? 'selected' : '' %>></option>
+                    <% } %>
+            </select>
+            <span id="errorLesson" class="errors-text"></span>
+
+            <label for="student_id">Student Details:</label>
+            <select id="student_id" name="student_id" required <%=(formMode=='showDetails' ) ? 'disabled' : '' %> >
+                <option value="" selected>
+                    <%=(formMode=='showDetails') ? pres.student.name + " " + pres.student.surname
+                        : '--- Select Student ---' %>
+                </option>
+                <% for (let i=0; i<allStudents.length; i++) { let stud=allStudents[i]; %>
+                    <option value="<%= stud._id %>" label="<%= stud.name + ' ' + stud.surname %>" <%=(pres._id &&
+                        stud._id.toString()==pres.student_id.toString()) ? 'selected' : '' %>></option>
+                    <% } %>
+            </select>
+            <span id="errorStudent" class="errors-text"></span>
+
+
+            <label for="isabsent">Is Absent?:</label>
+            <input type="text" name="isabsent" id="isabsent" placeholder="true:nieobecny, false:obecny"
+                value="<%= pres.isabsent %>" />
+            <span id="errorcheckbox" class="errors-text"></span>
+
+            <label for="absenceReason">Reason:</label>
+            <input type="text" style="min-height: 100px;" name="absenceReason" id="absenceReason"
+                placeholder="Leave empty if present" value="<%= pres.absenceReason %>" />
+            <span></span>
+
+            <p id="errorsSummary" style="margin-block-start: 0em;
+            margin-block-end: 0em;" class="errors-text"></p>
+            <% if (formMode !='showDetails' ) { %>
+                <div class="form-buttons">
+                    <input class="form-button-submit" type="submit" value="<%=btnLabel%>" />
+                    <a class="form-button-cancel" href="/Presences">Back</a>
+                </div>
+                <% } else { %>
+                    <div class="form-buttons">
+                        <a href="/Presences/edit/<%= pres._id %>" class="form-button-submit">Edit</a>
+                        <a class="form-button-cancel" href="/Presences">Back</a>
+                    </div>
+                    <% } %>
+        </form>
+    </main>
+    <%- include('../fragments/footer.ejs') %>

@@ -2,40 +2,46 @@
     <main>
 
         <div class="container">
-            <table class="lesson-table">
-                <tbody>
-                    <tr>
-                        <th class="lesson-table-element">Teacher's Name</th>
-                        <td class="lesson-table-element">Jan</td>
-                    </tr>
-                    <tr>
-                        <th class="lesson-table-element">Student's Name</th>
-                        <td class="lesson-table-element">Mikołaj</td>
-                    </tr>
-                    <tr>
-                        <th class="lesson-table-element">Student's Surname</th>
-                        <td class="lesson-table-element">Kowalski</td>
-                    </tr>
-                    <tr>
-                        <th class="lesson-table-element">Date</th>
-                        <td class="lesson-table-element">2020-11-15</td>
-                    </tr>
-                    <tr>
-                        <th class="lesson-table-element">Topic</th>
-                        <td class="lesson-table-element">USA Elections</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <div class="lesson-table-flex">
-                                <a href="presences/edit" class="lesson-table-edit">Edit</a>
-                                <a href="presences/details/1" class="lesson-table-add">Select</a>
-                                <a href="" class="lesson-table-delete">Delete</a>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="lesson-table">
+            <% for (let p of pres) { %>
+                <table class="lesson-table">
+                    <tbody>
+                        <tr>
+                            <th class="lesson-table-element">Student's Name</th>
+                            <td class="lesson-table-element">
+                                <%= p.student.name%>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="lesson-table-element">Student's Surname</th>
+                            <td class="lesson-table-element">
+                                <%= p.student.surname%>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="lesson-table-element">Date</th>
+                            <td class="lesson-table-element">
+                                <%= p.lesson.date.toISOString().split('T')[0] %>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="lesson-table-element">Topic</th>
+                            <td class="lesson-table-element">
+                                <%= p.lesson.topic %>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <div class="lesson-table-flex">
+                                    <a href="Presences/edit/<%=p._id%>" class="lesson-table-edit">Edit</a>
+                                    <a href="Presences/details/<%=p._id%>" class="lesson-table-add">Select</a>
+                                    <a href="Presences/delete/<%=p._id%>" class="lesson-table-delete">Delete</a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <% } %>
+                    <!-- <table class="lesson-table">
                 <tbody>
                     <tr>
                         <th class="lesson-table-element">Teacher's Name</th>
@@ -298,18 +304,18 @@
                         </td>
                     </tr>
                 </tbody>
-            </table>
-            <table class="lesson-table">
-                <tbody>
-                    <tr>
-                        <td>
-                            <div style="text-align: center;">
-                                <a href="presences/add" class="lesson-table-add">+ Add new Presence</a>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            </table> -->
+                    <table class="lesson-table">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div style="text-align: center;">
+                                        <a href="presences/add" class="lesson-table-add">+ Add new Presence</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
         </div>
 
     </main>

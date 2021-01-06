@@ -184,7 +184,7 @@ main{
 .list-actions-button-delete
 {
     display: inline-block;
-    width: 100px;
+    width: 75px;
     padding: 0.25rem 0.5rem;
 }
 .list-actions-button-details,
@@ -303,7 +303,7 @@ abbr[title='required'] {
 }
 .errors-text {
     font-size: 0.85em;
-    line-height: 2.25rem;
+    /* line-height: 1.25rem; */
   }
 .form input.error-input,
 .form select.error-input{
@@ -340,11 +340,10 @@ abbr[title='required'] {
 .form-button-submit,
 .form-button-cancel {
     width: 100%;
-}
-.form-button-cancel {
     box-sizing: border-box;
     display: block;
 }
+
 
 .form-button-submit {
     margin-bottom: 0.5rem;
@@ -352,7 +351,7 @@ abbr[title='required'] {
 
 .container{
     display: grid;
-    grid-template: auto auto auto auto/auto auto auto auto;
+    grid-template: auto auto auto/auto auto auto;
     row-gap: 10px;
     column-gap: 10px;
 }
@@ -362,6 +361,7 @@ abbr[title='required'] {
     max-width: 500px;
 }
 .presences-table{
+    display: block;
     border-collapse: collapse;
 }
 .presences-table-cell{

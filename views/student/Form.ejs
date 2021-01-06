@@ -1,0 +1,81 @@
+<%- include('../fragments/header.ejs') %>
+    <script type="application/javascript" src="/js/validation-student-add-form.js"></script>
+    <script type="application/javascript" src="/js/validationCommon.js"></script>
+    <main>
+
+        <h2 <%=(formMode=='createNew' ) ? 'style=text-align:center;' : 'style=text-align:left;' %> />
+            <%= pageTitle %>
+        </h2>
+        <form class="form" method="post" action="<%=formAction%>" novalidate onsubmit="return validateForm();"
+            <%=(formMode=='createNew' ) ? 'style=justify-content:center;' : 'style=justify-content:left;' %> />
+
+            <input type="hidden" name="_id" value="<%= stud._id %>">
+            <label for="name">Name:</label>
+            <input type="text" name="name" id="name" placeholder="2-60 znaków" value="<%= stud.name %>"
+                <%=(formMode=='showDetails' ) ? 'disabled' : '' %>/>
+            <span id="errorFirstName" class="errors-text"></span>
+            <label for="surname">Surname:</label>
+            <input type="text" name="surname" id="surname" placeholder="2-60 znaków" value="<%= stud.surname %>"
+                <%=(formMode=='showDetails' ) ? 'disabled' : '' %>/>
+            <span id="errorLastName" class="errors-text"></span>
+            <label for="PESEL">PESEL:</label>
+            <input type="text" name="PESEL" id="PESEL" value="<%= stud.PESEL %>" <%=(formMode=='showDetails' )
+                ? 'disabled' : '' %> />
+            <span id="errorPESEL" class="errors-text"></span>
+            <label for="email">E-mail:</label>
+            <input type="email" name="email" id="email" placeholder="np. abc@gmail.com" value="<%= stud.email %>"
+                <%=(formMode=='showDetails' ) ? 'disabled' : '' %> />
+            <span id="errorEmail" class="errors-text"></span>
+            <p id="errorsSummary" style="margin-block-start: 0em;
+            margin-block-end: 0em;" class="errors-text"></p>
+            <% if (formMode !='showDetails' ) { %>
+                <div class="form-buttons">
+                    <input class="form-button-submit" type="submit" value="<%=btnLabel%>" />
+                    <a class="form-button-cancel" href="/students">Back</a>
+                </div>
+                <% } else { %>
+                    <div class="form-buttons">
+                        <a href="/students/edit/<%= stud._id %>" class="form-button-submit">Edit</a>
+                        <a class="form-button-cancel" href="/students">Back</a>
+                    </div>
+                    <% } %>
+        </form>
+        <% if (formMode=='showDetails' || formMode=='edit' ) { %>
+            <h2>Student Presences</h2>
+
+            <table class="presences-table" style="min-width: 40%;">
+                <thead class="table-nav">
+                    <tr>
+                        <th class="table-nav-cell">Class ID</th>
+                        <th class="table-nav-cell">Date</th>
+                        <th class="table-nav-cell">Topic</th>
+                        <th class="table-nav-cell">Is Present</th>
+                        <th class="table-nav-cell">Reason</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for (let p of stud.presences) { %>
+                        <tr class="table-body">
+                            <td class="presences-table-cell">
+                                <%= p._id %>
+                            </td>
+                            <td class="presences-table-cell">
+                                <%= p.lesson.date.toISOString().split('T')[0] %>
+                            </td>
+                            <td class="presences-table-cell">
+                                <%= p.lesson.topic %>
+                            </td>
+                            <td class="presences-table-cell">
+                                <%= p.isabsent %>
+                            </td>
+                            <td class="presences-table-cell">
+                                <%= p.absenceReason %>
+                            </td>
+                        </tr>
+                        <% } %>
+                </tbody>
+            </table>
+            <% } %>
+    </main>
+    <%- include('../fragments/footer.ejs') %>

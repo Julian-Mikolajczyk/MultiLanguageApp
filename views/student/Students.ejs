@@ -12,22 +12,34 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="table-body">
-                        <td>Jan</td>
-                        <td>Kowalski</td>
-                        <td>jan.kowalski@acme.com</td>
-                        <td>1111111111</td>
-                        <td class="dropdown">
-                            <button class="dropbtn">Details</button>
-                            <div class="dropdown-content">
-                                <a href="Students/details/1" class="list-actions-button-details">Profile
-                                    Informations</a>
-                                <a href="Students/edit" class="list-actions-button-edit">Edit</a>
-                                <a href="" class="list-actions-button-delete">Delete</a>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="table-body">
+
+                    <% for (let stud of studs) { %>
+                        <tr class="table-body">
+                            <td>
+                                <%= stud.name %>
+                            </td>
+                            <td>
+                                <%= stud.surname %>
+                            </td>
+                            <td>
+                                <%= stud.email %>
+                            </td>
+                            <td>
+                                <%= stud.PESEL %>
+                            </td>
+                            <td class="dropdown">
+                                <button class="dropbtn">Details</button>
+                                <div class="dropdown-content">
+                                    <a href="Students/details/<%=stud._id%>" class="list-actions-button-details">Profile
+                                        Informations</a>
+                                    <a href="Students/edit/<%=stud._id%>" class="list-actions-button-edit">Edit</a>
+                                    <a href="Students/delete/<%=stud._id%>"
+                                        class="list-actions-button-delete">Delete</a>
+                                </div>
+                            </td>
+                        </tr>
+                        <% } %>
+                            <!-- <tr class="table-body">
                         <td>Julian</td>
                         <td>Mikołajczyk</td>
                         <td>mikolajczykjulian@gmail.com</td>
@@ -56,7 +68,7 @@
                                 <a href="" class="list-actions-button-delete">Delete</a>
                             </div>
                         </td>
-                    </tr>
+                    </tr> -->
                 </tbody>
             </table>
         </div>

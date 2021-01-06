@@ -23,9 +23,9 @@ module.exports = () => {
         .then(stud => {
             if (!stud || stud.length == 0) {
                 return Student.bulkCreate([
-                    { name: 'Jan', surname: 'Kowalski', PESEL: '3012199905052', email: 'jan.kowalski@gmail.com' },
-                    { name: 'Adam', surname: 'Zieliński', PESEL: '3012199912345', email: 'adam.zielinski@gmail.com' },
-                    { name: 'Michał', surname: 'Pazio', PESEL: '3012199923456', email: 'michal.pazio@gmail.com' }
+                    { name: 'Jan', surname: 'Kowalski', PESEL: '30129905052', email: 'jan.kowalski@gmail.com' },
+                    { name: 'Adam', surname: 'Zieliński', PESEL: '30129912345', email: 'adam.zielinski@gmail.com' },
+                    { name: 'Michał', surname: 'Pazio', PESEL: '30129923456', email: 'michal.pazio@gmail.com' }
                 ])
                     .then(() => {
                         return Student.findAll();
