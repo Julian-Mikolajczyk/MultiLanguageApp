@@ -6,6 +6,7 @@
         <h2 <%=(formMode=='createNew' ) ? 'style=text-align:center;' : 'style=text-align:left;' %> />
             <%= pageTitle %>
         </h2>
+        <!-- onsubmit="return validateForm();" -->
         <form class="form" method="post" action="<%=formAction%>" novalidate onsubmit="return validateForm();"
             <%=(formMode=='createNew' ) ? 'style=justify-content:center;' : 'style=justify-content:left;' %> />
 
@@ -13,38 +14,68 @@
 
 
             <label for="teacher_id">Teacher Name:</label>
-            <select id="teacher_id" name="teacher_id" required <%=(formMode=='showDetails' ) ? 'disabled' : '' %> >
+            <select class="<%= validationErrors.find(e => e.path.includes('teacher_id')) ? 'error-input' : '' %>"
+                id="teacher_id" name="teacher_id" required <%=(formMode=='showDetails' ) ? 'disabled' : '' %> >
                 <option value="" selected>--- Select the Teacher ---</option>
                 <% for (let i=0; i<allteach.length; i++) { let teach=allteach[i]; %>
                     <option value="<%= teach._id %>" label="<%= teach.name + ' ' + teach.surname %>" <%=(lessons._id &&
                         teach._id.toString()==lessons.teacher_id.toString()) ? 'selected' : '' %>></option>
                     <% } %>
             </select>
-            <span id="errorTeacherName" class="errors-text"></span>
-            <label for="Date">Date:</label>
-            <input type="date" name="date" id="date" value="<%= lessons.date %>" <%=(formMode=='showDetails' )
-                ? 'disabled' : '' %>/>
-            <span id="errorDate" class="errors-text"></span>
+            <span id="errorTeacherName" class="errors-text">
+                <% if (validationErrors.find(e=> e.path.includes('teacher_id'))) { %>
+                    <%= validationErrors.find(e=> e.path.includes('teacher_id')).message %>
+                        <% } %>
+            </span>
+            <label for="date">Date:</label>
+            <input class="<%= validationErrors.find(e => e.path.includes('date')) ? 'error-input' : '' %>" type="date"
+                name="date" id="date" value="<%=lessons.date ? lessons.date.toISOString().split('T')[0] : ''  %>"
+                <%=(formMode=='showDetails' ) ? 'disabled' : '' %>/>
+            <span id="errorDate" class="errors-text">
+                <% if (validationErrors.find(e=> e.path.includes('date'))) { %>
+                    <%= validationErrors.find(e=> e.path.includes('date')).message %>
+                        <% } %>
+            </span>
 
             <label for="starttime">Start Time:</label>
-            <input type="text" name="starttime" id="starttime" placeholder="eg. 10:15" value="<%= lessons.starttime %>"
+            <input class="<%= validationErrors.find(e => e.path.includes('starttime')) ? 'error-input' : '' %>"
+                type="text" name="starttime" id="starttime" placeholder="eg. 10:15" value="<%= lessons.starttime %>"
                 <%=(formMode=='showDetails' ) ? 'disabled' : '' %>/>
-            <span id="errorStartTime" class="errors-text"></span>
+            <span id="errorStartTime" class="errors-text">
+                <% if (validationErrors.find(e=> e.path.includes('starttime'))) { %>
+                    <%= validationErrors.find(e=> e.path.includes('starttime')).message %>
+                        <% } %>
+            </span>
 
             <label for="endtime">End Time:</label>
-            <input type="text" name="endtime" id="endtime" placeholder="eg. 11:45" value="<%= lessons.endtime %>"
+            <input class="<%= validationErrors.find(e => e.path.includes('endtime')) ? 'error-input' : '' %>"
+                type="text" name="endtime" id="endtime" placeholder="eg. 11:45" value="<%= lessons.endtime %>"
                 <%=(formMode=='showDetails' ) ? 'disabled' : '' %>/>
-            <span id="errorEndTime" class="errors-text"></span>
+            <span id="errorEndTime" class="errors-text">
+                <% if (validationErrors.find(e=> e.path.includes('endtime'))) { %>
+                    <%= validationErrors.find(e=> e.path.includes('endtime')).message %>
+                        <% } %>
+            </span>
 
             <label for="topic">Topic:</label>
-            <input type="text" name="topic" id="topic" placeholder="eg. Verbs" value="<%= lessons.topic %>"
-                <%=(formMode=='showDetails' ) ? 'disabled' : '' %> />
-            <span id="errorTopic" class="errors-text"></span>
+            <input class="<%= validationErrors.find(e => e.path.includes('topic')) ? 'error-input' : '' %>" type="text"
+                name="topic" id="topic" placeholder="eg. Verbs" value="<%= lessons.topic %>" <%=(formMode=='showDetails'
+                ) ? 'disabled' : '' %> />
+            <span id="errorTopic" class="errors-text">
+                <% if (validationErrors.find(e=> e.path.includes('topic'))) { %>
+                    <%= validationErrors.find(e=> e.path.includes('topic')).message %>
+                        <% } %>
+            </span>
 
             <label for="classroomnr">Classroom Nr:</label>
-            <input type="email" name="classroomnr" id="classroomnr" placeholder="eg. 2B"
-                value="<%= lessons.classroomnr %>" <%=(formMode=='showDetails' ) ? 'disabled' : '' %> />
-            <span id="errorClassroomNr" class="errors-text"></span>
+            <input class="<%= validationErrors.find(e => e.path.includes('classroomnr')) ? 'error-input' : '' %>"
+                type="email" name="classroomnr" id="classroomnr" placeholder="eg. 2B" value="<%= lessons.classroomnr %>"
+                <%=(formMode=='showDetails' ) ? 'disabled' : '' %> />
+            <span id="errorClassroomNr" class="errors-text">
+                <% if (validationErrors.find(e=> e.path.includes('classroomnr'))) { %>
+                    <%= validationErrors.find(e=> e.path.includes('classroomnr')).message %>
+                        <% } %>
+            </span>
 
             <p id="errorsSummary" style="margin-block-start: 0em;
             margin-block-end: 0em;" class="errors-text"></p>

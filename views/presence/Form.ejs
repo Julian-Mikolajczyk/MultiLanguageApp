@@ -6,6 +6,7 @@
         <h2 <%=(formMode=='createNew' ) ? 'style=text-align:center;' : 'style=text-align:left;' %> />
             <%= pageTitle %>
         </h2>
+        <!-- onsubmit="return validateForm();" -->
         <form class="form" method="post" action="<%=formAction%>" novalidate onsubmit="return validateForm();"
             <%=(formMode=='createNew' ) ? 'style=justify-content:center;' : 'style=justify-content:left;' %> />
 
@@ -13,7 +14,8 @@
 
 
             <label for="lesson_id">Lesson Details:</label>
-            <select id="lesson_id" name="lesson_id" required <%=(formMode=='showDetails' ) ? 'disabled' : '' %> >
+            <select class="<%= validationErrors.find(e => e.path.includes('lesson_id')) ? 'error-input' : '' %>"
+                id="lesson_id" name="lesson_id" required <%=(formMode=='showDetails' ) ? 'disabled' : '' %> >
                 <option value="" selected>
                     <%=(formMode=='showDetails') ? pres.lesson.topic + ' (' +
                         pres.lesson.date.toISOString().split('T')[0] + ')' : '--- Select Lesson ---' %>
@@ -24,10 +26,15 @@
                         less._id.toString()==pres.lesson_id.toString()) ? 'selected' : '' %>></option>
                     <% } %>
             </select>
-            <span id="errorLesson" class="errors-text"></span>
+            <span id="errorLesson" class="errors-text">
+                <% if (validationErrors.find(e=> e.path.includes('lesson_id'))) { %>
+                    <%= validationErrors.find(e=> e.path.includes('lesson_id')).message %>
+                        <% } %>
+            </span>
 
             <label for="student_id">Student Details:</label>
-            <select id="student_id" name="student_id" required <%=(formMode=='showDetails' ) ? 'disabled' : '' %> >
+            <select class="<%= validationErrors.find(e => e.path.includes('student_id')) ? 'error-input' : '' %>"
+                id="student_id" name="student_id" required <%=(formMode=='showDetails' ) ? 'disabled' : '' %> >
                 <option value="" selected>
                     <%=(formMode=='showDetails') ? pres.student.name + " " + pres.student.surname
                         : '--- Select Student ---' %>
@@ -37,18 +44,32 @@
                         stud._id.toString()==pres.student_id.toString()) ? 'selected' : '' %>></option>
                     <% } %>
             </select>
-            <span id="errorStudent" class="errors-text"></span>
+            <span id="errorStudent" class="errors-text">
+                <% if (validationErrors.find(e=> e.path.includes('student_id'))) { %>
+                    <%= validationErrors.find(e=> e.path.includes('student_id')).message %>
+                        <% } %>
+            </span>
 
 
             <label for="isabsent">Is Absent?:</label>
-            <input type="text" name="isabsent" id="isabsent" placeholder="true:nieobecny, false:obecny"
+            <input class="<%= validationErrors.find(e => e.path.includes('isabsent')) ? 'error-input' : '' %>"
+                type="text" name="isabsent" id="isabsent" placeholder="true:nieobecny, false:obecny"
                 value="<%= pres.isabsent %>" />
-            <span id="errorcheckbox" class="errors-text"></span>
+            <span id="errorcheckbox" class="errors-text">
+                <% if (validationErrors.find(e=> e.path.includes('isabsent'))) { %>
+                    <%= validationErrors.find(e=> e.path.includes('isabsent')).message %>
+                        <% } %>
+            </span>
 
             <label for="absenceReason">Reason:</label>
-            <input type="text" style="min-height: 100px;" name="absenceReason" id="absenceReason"
+            <input class="<%= validationErrors.find(e => e.path.includes('absenceReason')) ? 'error-input' : '' %>"
+                type="text" style="min-height: 100px;" name="absenceReason" id="absenceReason"
                 placeholder="Leave empty if present" value="<%= pres.absenceReason %>" />
-            <span></span>
+            <span>
+                <% if (validationErrors.find(e=> e.path.includes('absenceReason'))) { %>
+                    <%= validationErrors.find(e=> e.path.includes('absenceReason')).message %>
+                        <% } %>
+            </span>
 
             <p id="errorsSummary" style="margin-block-start: 0em;
             margin-block-end: 0em;" class="errors-text"></p>

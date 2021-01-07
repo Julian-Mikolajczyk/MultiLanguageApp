@@ -1,6 +1,11 @@
 const LessonRepository = require('../repository/sequelize/LessonRepository');
 const teacherRepository = require('../repository/sequelize/TeacherRepository');
 
+const tmpErr = {
+    errors: [
+        { path: [""] }
+    ]
+}
 
 exports.showLessonList = (req, res, next) => {
     LessonRepository.getLessons()
@@ -18,6 +23,7 @@ exports.showAddLessonForm = (req, res, next) => {
             allteach = teachers;
         })
         .then(lessons => {
+
             res.render('lesson/form', {
                 lessons: {},
                 formMode: 'createNew',
@@ -25,8 +31,10 @@ exports.showAddLessonForm = (req, res, next) => {
                 pageTitle: 'Add Lesson',
                 btnLabel: 'Add',
                 formAction: '/lessons/add',
-                navLocation: 'lesson'
+                navLocation: 'lesson',
+                validationErrors: tmpErr.errors
             });
+
         });
 }
 exports.showLessonDetails = (req, res, next) => {
@@ -44,7 +52,8 @@ exports.showLessonDetails = (req, res, next) => {
                 allteach: allteach,
                 pageTitle: 'Lesson Details',
                 formAction: '',
-                navLocation: 'lesson'
+                navLocation: 'lesson',
+                validationErrors: tmpErr.errors
             });
         });
 }
@@ -64,7 +73,8 @@ exports.showLessonEdit = (req, res, next) => {
                 pageTitle: 'Edit Lesson',
                 btnLabel: 'Edit',
                 formAction: '/lessons/edit',
-                navLocation: 'lesson'
+                navLocation: 'lesson',
+                validationErrors: tmpErr.errors
             });
         });
 }
@@ -73,6 +83,24 @@ exports.addLesson = (req, res, next) => {
     LessonRepository.createLesson(lessonData)
         .then(result => {
             res.redirect('/lessons');
+        }).catch(err => {
+            let allteach;
+            teacherRepository.getTeachers()
+                .then(teachers => {
+                    allteach = teachers;
+                })
+                .then(lessons => {
+                    res.render('lesson/form', {
+                        lessons: lessonData,
+                        formMode: 'createNew',
+                        allteach: allteach,
+                        pageTitle: 'Add Lesson',
+                        btnLabel: 'Add',
+                        formAction: '/lessons/add',
+                        navLocation: 'lesson',
+                        validationErrors: err.errors
+                    });
+                })
         });
 };
 exports.updateLesson = (req, res, next) => {
@@ -81,6 +109,26 @@ exports.updateLesson = (req, res, next) => {
     LessonRepository.updateLesson(lessonId, lessData)
         .then(result => {
             res.redirect('/lessons');
+        }).catch(err => {
+            let allteach;
+            const lessonId = req.params.lessonId;
+            teacherRepository.getTeachers()
+                .then(teachers => {
+                    allteach = teachers;
+                    return LessonRepository.getLessonById(lessonId);
+                })
+                .then(lessons => {
+                    res.render('lesson/form', {
+                        lessons: lessData,
+                        formMode: 'edit',
+                        allteach: allteach,
+                        pageTitle: 'Edit Lesson',
+                        btnLabel: 'Edit',
+                        formAction: '/lessons/edit',
+                        navLocation: 'lesson',
+                        validationErrors: err.errors
+                    });
+                })
         });
 };
 exports.deleteLesson = (req, res, next) => {

@@ -10,15 +10,30 @@ const Presence = sequelize.define('Presence', {
     },
     student_id: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
+        validate: {
+            notEmpty: {
+                msg: "Pole jest wymagane"
+            }
+        }
     },
     lesson_id: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
+        validate: {
+            notEmpty: {
+                msg: "Pole jest wymagane"
+            }
+        }
     },
     isabsent: {
         type: Sequelize.BOOLEAN,
-        allowNull: true
+        allowNull: false,
+        validate: {
+            notEmpty: {
+                msg: "Pole jest wymagane"
+            }
+        }
     },
     absenceReason: {
         type: Sequelize.STRING,

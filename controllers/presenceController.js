@@ -2,6 +2,11 @@ const LessonRepository = require('../repository/sequelize/LessonRepository');
 const StudentRepository = require('../repository/sequelize/StudentRepository');
 const PresenceRepository = require('../repository/sequelize/PresenceRepository');
 
+const tmpErr = {
+    errors: [
+        { path: [""] }
+    ]
+}
 
 exports.showPresenceList = (req, res, next) => {
     PresenceRepository.getPresences()
@@ -29,7 +34,8 @@ exports.showAddPresenceForm = (req, res, next) => {
                 pageTitle: 'Add Presence',
                 btnLabel: 'Add',
                 formAction: '/presences/add',
-                navLocation: 'presence'
+                navLocation: 'presence',
+                validationErrors: tmpErr.errors
             });
         })
 
@@ -47,7 +53,8 @@ exports.showPresenceDetails = (req, res, next) => {
                 navLocation: 'less',
                 alllessons: '',
                 allStudents: '',
-                navLocation: 'presence'
+                navLocation: 'presence',
+                validationErrors: tmpErr.errors
             });
         })
 
@@ -73,7 +80,8 @@ exports.showPresenceEdit = (req, res, next) => {
                 pageTitle: 'Edit Presence',
                 btnLabel: 'Edit',
                 formAction: '/presences/edit',
-                navLocation: 'presence'
+                navLocation: 'presence',
+                validationErrors: tmpErr.errors
             });
         })
 }
@@ -82,6 +90,27 @@ exports.addPresence = (req, res, next) => {
     PresenceRepository.createPresence(presenceData)
         .then(result => {
             res.redirect('/presences');
+        }).catch(err => {
+            let alllessons, allStudents;
+            StudentRepository.getStudents()
+                .then(students => {
+                    allStudents = students;
+                    return LessonRepository.getLessons();
+                })
+                .then(lessons => {
+                    alllessons = lessons;
+                    res.render('presence/form', {
+                        pres: presenceData,
+                        formMode: 'createNew',
+                        alllessons: alllessons,
+                        allStudents: allStudents,
+                        pageTitle: 'Add Presence',
+                        btnLabel: 'Add',
+                        formAction: '/presences/add',
+                        navLocation: 'presence',
+                        validationErrors: err.errors
+                    });
+                })
         });
 };
 exports.updatePresence = (req, res, next) => {
@@ -91,6 +120,31 @@ exports.updatePresence = (req, res, next) => {
     PresenceRepository.updatePresence(presenceId, pressData)
         .then(result => {
             res.redirect('/presences');
+        }).catch(err => {
+            let alllessons, allStudents;
+            const presenceId = req.params.presenceId;
+            StudentRepository.getStudents()
+                .then(students => {
+                    allStudents = students;
+                    return LessonRepository.getLessons();
+                })
+                .then(lessons => {
+                    alllessons = lessons;
+                    return PresenceRepository.getPresenceById(presenceId);
+                })
+                .then(pres => {
+                    res.render('presence/form', {
+                        pres: presenceData,
+                        formMode: 'edit',
+                        alllessons: alllessons,
+                        allStudents: allStudents,
+                        pageTitle: 'Edit Presence',
+                        btnLabel: 'Edit',
+                        formAction: '/presences/edit',
+                        navLocation: 'presence',
+                        validationErrors: err.errors
+                    });
+                })
         });
 };
 exports.deletePresence = (req, res, next) => {

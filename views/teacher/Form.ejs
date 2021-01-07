@@ -6,26 +6,49 @@
         <h2 <%=(formMode=='createNew' ) ? 'style=text-align:center;' : 'style=text-align:left;' %> />
             <%= pageTitle %>
         </h2>
+        <!-- onsubmit="return validateForm();" -->
         <form class="form" method="post" action="<%=formAction%>" novalidate onsubmit="return validateForm();"
             <%=(formMode=='createNew' ) ? 'style=justify-content:center;' : 'style=justify-content:left;' %> />
 
             <input type="hidden" name="_id" value="<%= teach._id %>">
             <label for="name">Name:</label>
-            <input type="text" name="name" id="name" placeholder="2-60 znaków" value="<%= teach.name %>"
-                <%=(formMode=='showDetails' ) ? 'disabled' : '' %>/>
-            <span id="errorFirstName" class="errors-text"></span>
+            <input class="<%= validationErrors.find(e => e.path.includes('name')) ? 'error-input' : '' %>" type="text"
+                name="name" id="name" placeholder="2-60 znaków" value="<%= teach.name %>" <%=(formMode=='showDetails' )
+                ? 'disabled' : '' %>/>
+            <span id="errorFirstName" class="errors-text">
+                <% if (validationErrors.find(e=> e.path.includes('name'))) { %>
+                    <%= validationErrors.find(e=> e.path.includes('name')).message %>
+                        <% } %>
+            </span>
             <label for="surname">Surname:</label>
-            <input type="text" name="surname" id="surname" placeholder="2-60 znaków" value="<%= teach.surname %>"
+            <input class="<%= validationErrors.find(e => e.path.includes('surname')) ? 'error-input' : '' %>"
+                type="text" name="surname" id="surname" placeholder="2-60 znaków" value="<%= teach.surname %>"
                 <%=(formMode=='showDetails' ) ? 'disabled' : '' %>/>
-            <span id="errorLastName" class="errors-text"></span>
+            <span id="errorLastName" class="errors-text">
+                <% if (validationErrors.find(e=> e.path.includes('surname'))) { %>
+                    <%= validationErrors.find(e=> e.path.includes('surname')).message %>
+                        <% } %>
+            </span>
             <label for="salary">Salary:</label>
-            <input type="text" name="salary" id="salary" value="<%= teach.salary %>" <%=(formMode=='showDetails' )
-                ? 'disabled' : '' %> />
-            <span id="errorSalary" class="errors-text"></span>
+            <input class="<%= validationErrors.find(e => e.path.includes('salary')) ? 'error-input' : '' %>" type="text"
+                name="salary" id="salary" value="<%= teach.salary %>" <%=(formMode=='showDetails' ) ? 'disabled' : '' %>
+            />
+            <span id="errorSalary" class="errors-text">
+                <% if (validationErrors.find(e=> e.path.includes('salary'))) { %>
+                    <%= validationErrors.find(e=> e.path.includes('salary')).message %>
+                        <% } %>
+            </span>
             <label for="hiredate">HireDate:</label>
-            <input type="date" name="hiredate" id="hiredate" placeholder="np. 2020-10-10" value="<%= teach.hiredate %>"
+            <input class="<%= validationErrors.find(e => e.path.includes('hiredate')) ? 'error-input' : '' %>"
+                type="date" name="hiredate" id="hiredate"
+                value="<%= teach.hiredate? teach.hiredate.toISOString().split('T')[0] : '' %>"
                 <%=(formMode=='showDetails' ) ? 'disabled' : '' %> />
-            <span id="errorDate" class="errors-text"></span>
+            <span id="errorDate" class="errors-text">
+                <% if (validationErrors.find(e=> e.path.includes('hiredate'))) { %>
+                    <%= validationErrors.find(e=> e.path.includes('hiredate')).message %>
+                        <% } %>
+
+            </span>
             <p id="errorsSummary" style="margin-block-start: 0em;
             margin-block-end: 0em;" class="errors-text"></p>
             <% if (formMode !='showDetails' ) { %>

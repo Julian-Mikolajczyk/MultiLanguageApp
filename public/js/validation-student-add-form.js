@@ -22,11 +22,12 @@ function validateForm() {
         valid = false;
         firstNameInput.classList.add("error-input");
         errorFirstName.innerText = "Pole powinno zawierać od 2 do 100 znaków";
-    } else if (!isAlpha(firstNameInput.value)) {
-        valid = false;
-        firstNameInput.classList.add("error-input");
-        errorFirstName.innerText = "Pole może składać się tylko ze znaków alfabetu angielskiego";
     }
+    //  else if (!isAlpha(firstNameInput.value)) {
+    //     valid = false;
+    //     firstNameInput.classList.add("error-input");
+    //     errorFirstName.innerText = "Pole może składać się tylko ze znaków alfabetu angielskiego";
+    // }
 
     if (!checkRequired(lastNameInput.value)) {
         valid = false;
@@ -37,11 +38,11 @@ function validateForm() {
         lastNameInput.classList.add("error-input");
         errorLastName.innerText = "Pole powinno zawierać od 2 do 100 znaków";
     }
-    else if (!isAlpha(lastNameInput.value)) {
-        valid = false;
-        lastNameInput.classList.add("error-input");
-        errorLastName.innerText = "Pole może składać się tylko ze znaków alfabetu angielskiego";
-    }
+    // else if (!isAlpha(lastNameInput.value)) {
+    //     valid = false;
+    //     lastNameInput.classList.add("error-input");
+    //     errorLastName.innerText = "Pole może składać się tylko ze znaków alfabetu angielskiego";
+    // }
 
     debugger;
     if (!checkRequired(PESELInput.value)) {

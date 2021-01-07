@@ -6,26 +6,46 @@
         <h2 <%=(formMode=='createNew' ) ? 'style=text-align:center;' : 'style=text-align:left;' %> />
             <%= pageTitle %>
         </h2>
+        <!-- onsubmit="return validateForm();" -->
         <form class="form" method="post" action="<%=formAction%>" novalidate onsubmit="return validateForm();"
             <%=(formMode=='createNew' ) ? 'style=justify-content:center;' : 'style=justify-content:left;' %> />
 
             <input type="hidden" name="_id" value="<%= stud._id %>">
             <label for="name">Name:</label>
-            <input type="text" name="name" id="name" placeholder="2-60 znaków" value="<%= stud.name %>"
-                <%=(formMode=='showDetails' ) ? 'disabled' : '' %>/>
-            <span id="errorFirstName" class="errors-text"></span>
+            <input class="<%= validationErrors.find(e => e.path.includes('name')) ? 'error-input' : '' %>" type="text"
+                name="name" id="name" placeholder="2-60 znaków" value="<%= stud.name %>" <%=(formMode=='showDetails' )
+                ? 'disabled' : '' %>/>
+            <span id="errorFirstName" class="errors-text">
+                <% if (validationErrors.find(e=> e.path.includes('name'))) { %>
+                    <%= validationErrors.find(e=> e.path.includes('name')).message %>
+                        <% } %>
+            </span>
             <label for="surname">Surname:</label>
-            <input type="text" name="surname" id="surname" placeholder="2-60 znaków" value="<%= stud.surname %>"
+            <input class="<%= validationErrors.find(e => e.path.includes('surname')) ? 'error-input' : '' %>"
+                type="text" name="surname" id="surname" placeholder="2-60 znaków" value="<%= stud.surname %>"
                 <%=(formMode=='showDetails' ) ? 'disabled' : '' %>/>
-            <span id="errorLastName" class="errors-text"></span>
+            <span id="errorLastName" class="errors-text">
+                <% if (validationErrors.find(e=> e.path.includes('surname'))) { %>
+                    <%= validationErrors.find(e=> e.path.includes('surname')).message %>
+                        <% } %>
+            </span>
             <label for="PESEL">PESEL:</label>
-            <input type="text" name="PESEL" id="PESEL" value="<%= stud.PESEL %>" <%=(formMode=='showDetails' )
-                ? 'disabled' : '' %> />
-            <span id="errorPESEL" class="errors-text"></span>
+            <input class="<%= validationErrors.find(e => e.path.includes('PESEL')) ? 'error-input' : '' %>" type="text"
+                name="PESEL" id="PESEL" value="<%= stud.PESEL %>" <%=(formMode=='showDetails' ) ? 'disabled' : '' %> />
+            <span id="errorPESEL" class="errors-text">
+                <% if (validationErrors.find(e=> e.path.includes('PESEL'))) { %>
+                    <%= validationErrors.find(e=> e.path.includes('PESEL')).message %>
+                        <% } %>
+            </span>
             <label for="email">E-mail:</label>
-            <input type="email" name="email" id="email" placeholder="np. abc@gmail.com" value="<%= stud.email %>"
+            <input class="<%= validationErrors.find(e => e.path.includes('email')) ? 'error-input' : '' %>" type="email"
+                name="email" id="email" placeholder="np. abc@gmail.com" value="<%= stud.email %>"
                 <%=(formMode=='showDetails' ) ? 'disabled' : '' %> />
-            <span id="errorEmail" class="errors-text"></span>
+            <span id="errorEmail" class="errors-text">
+                <% if (validationErrors.find(e=> e.path.includes('email'))) { %>
+                    <%= validationErrors.find(e=> e.path.includes('email')).message %>
+                        <% } %>
+            </span>
             <p id="errorsSummary" style="margin-block-start: 0em;
             margin-block-end: 0em;" class="errors-text"></p>
             <% if (formMode !='showDetails' ) { %>
@@ -49,7 +69,7 @@
                         <th class="table-nav-cell">Class ID</th>
                         <th class="table-nav-cell">Date</th>
                         <th class="table-nav-cell">Topic</th>
-                        <th class="table-nav-cell">Is Present</th>
+                        <th class="table-nav-cell">Is Absent?</th>
                         <th class="table-nav-cell">Reason</th>
 
                     </tr>

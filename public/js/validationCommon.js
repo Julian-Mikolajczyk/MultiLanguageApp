@@ -35,38 +35,12 @@ function checkDate(value) {
     if (!value) {
         return false;
     }
-    const pattern = /(\d{2}).(\d{2}).(\d{4})/;
-    debugger;
-    let nowDate = new Date(),
-        month = '' + (nowDate.getMonth() + 1),
-        day = '' + nowDate.getDate(),
-        year = nowDate.getFullYear();
 
-    if (month.length < 2)
-        month = '0' + month;
-    if (day.length < 2)
-        day = '0' + day;
-    const nowString = [year, month, day].join('-');
-
-    if (!pattern.test(nowString)) {
-        return false;
-    }
-    const valueDate = new Date(value);
-    const compareToDate = new Date(nowString);
-    if (valueDate.getTime() < compareToDate.getTime()) {
-        return false;
-    }
+    const pattern = /(\d{4})-(\d{2})-(\d{2})/;
 
     return pattern.test(value);
 
 
-}
-function isDate(value) {
-    const pattern = /(\d{2}).(\d{2}).(\d{4})/;
-    if (!pattern.test(value.toString)) {
-        return false;
-    }
-    return true;
 }
 function dateAfter(value) {
     var d = new Date(),
@@ -80,7 +54,6 @@ function dateAfter(value) {
         day = '0' + day;
 
     let date = [year, month, day].join('-');
-    debugger;
     const pattern = /(\d{4})-(\d{2})-(\d{2})/;
     if (!pattern.test(date)) {
         return false;

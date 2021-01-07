@@ -1,4 +1,9 @@
 const teacherRepository = require('../repository/sequelize/TeacherRepository');
+const tmpErr = {
+    errors: [
+        { path: [""] }
+    ]
+}
 
 exports.showTeacherList = (req, res, next) => {
     teacherRepository.getTeachers()
@@ -16,7 +21,8 @@ exports.showAddTeacherForm = (req, res, next) => {
         formMode: 'createNew',
         btnLabel: 'Add',
         formAction: '/teachers/add',
-        navLocation: 'teacher'
+        navLocation: 'teacher',
+        validationErrors: tmpErr.errors
     });
 }
 exports.showTeacherDetails = (req, res, next) => {
@@ -28,7 +34,8 @@ exports.showTeacherDetails = (req, res, next) => {
                 formMode: 'showDetails',
                 pageTitle: 'Teacher Details',
                 formAction: '',
-                navLocation: 'teacher'
+                navLocation: 'teacher',
+                validationErrors: tmpErr.errors
             });
         });
 }
@@ -42,7 +49,8 @@ exports.showTeacherEdit = (req, res, next) => {
                 pageTitle: 'Edit Teacher',
                 btnLabel: 'Edit',
                 formAction: '/teachers/edit',
-                navLocation: 'teacher'
+                navLocation: 'teacher',
+                validationErrors: tmpErr.errors
             });
         });
 }
@@ -51,6 +59,17 @@ exports.addTeacher = (req, res, next) => {
     teacherRepository.createTeacher(teachData)
         .then(result => {
             res.redirect('/teachers');
+        })
+        .catch(err => {
+            res.render('teacher/form', {
+                teach: teachData,
+                pageTitle: 'Add New Teacher',
+                formMode: 'createNew',
+                btnLabel: 'Add',
+                formAction: '/teachers/add',
+                navLocation: 'teacher',
+                validationErrors: err.errors
+            });
         });
 };
 exports.updateTeacher = (req, res, next) => {
@@ -59,6 +78,16 @@ exports.updateTeacher = (req, res, next) => {
     teacherRepository.updateTeacher(teachId, teachData)
         .then(result => {
             res.redirect('/teachers');
+        }).catch(err => {
+            res.render('teacher/form', {
+                teach: teachData,
+                formMode: 'edit',
+                pageTitle: 'Edit Teacher',
+                btnLabel: 'Edit',
+                formAction: '/teachers/edit',
+                navLocation: 'teacher',
+                validationErrors: err.errors
+            });
         });
 };
 exports.deleteTeacher = (req, res, next) => {

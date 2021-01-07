@@ -25,7 +25,7 @@ module.exports = () => {
                 return Student.bulkCreate([
                     { name: 'Jan', surname: 'Kowalski', PESEL: '30129905052', email: 'jan.kowalski@gmail.com' },
                     { name: 'Adam', surname: 'Zieliński', PESEL: '30129912345', email: 'adam.zielinski@gmail.com' },
-                    { name: 'Michał', surname: 'Pazio', PESEL: '30129923456', email: 'michal.pazio@gmail.com' }
+                    { name: 'Kuba', surname: 'Polak', PESEL: '30129923456', email: 'kuba.polak@gmail.com' }
                 ])
                     .then(() => {
                         return Student.findAll();
@@ -63,6 +63,7 @@ module.exports = () => {
                 return Lesson.bulkCreate([
                     { teacher_id: allTeachers[0]._id, date: '2020-10-30', starttime: '10:15', endtime: '11:45', topic: 'USA elections', classroomnr: '2B' },
                     { teacher_id: allTeachers[1]._id, date: '2020-09-30', starttime: '15:45', endtime: '17:15', topic: 'nouns', classroomnr: '11A' },
+                    { teacher_id: allTeachers[2]._id, date: '2020-08-10', starttime: '13:45', endtime: '15:15', topic: 'Around the world', classroomnr: '127A' },
                 ])
                     .then(() => {
                         return Lesson.findAll();
@@ -80,7 +81,12 @@ module.exports = () => {
                 return Presence.bulkCreate([
                     { student_id: allStudents[0]._id, lesson_id: allLessons[0]._id, isabsent: false, absenceReason: '' },
                     { student_id: allStudents[1]._id, lesson_id: allLessons[0]._id, isabsent: true, absenceReason: 'sick' },
-                    { student_id: allStudents[0]._id, lesson_id: allLessons[1]._id, isabsent: false, absenceReason: '' },
+                    { student_id: allStudents[2]._id, lesson_id: allLessons[0]._id, isabsent: false, absenceReason: '' },
+                    { student_id: allStudents[0]._id, lesson_id: allLessons[1]._id, isabsent: true, absenceReason: 'trip' },
+                    { student_id: allStudents[1]._id, lesson_id: allLessons[1]._id, isabsent: false, absenceReason: '' },
+                    { student_id: allStudents[2]._id, lesson_id: allLessons[1]._id, isabsent: true, absenceReason: 'Broken leg' },
+                    { student_id: allStudents[0]._id, lesson_id: allLessons[2]._id, isabsent: false, absenceReason: '' },
+                    { student_id: allStudents[2]._id, lesson_id: allLessons[2]._id, isabsent: true, absenceReason: 'school performance' },
                 ]);
             } else {
                 return pres;

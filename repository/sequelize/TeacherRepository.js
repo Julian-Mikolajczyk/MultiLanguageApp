@@ -22,14 +22,14 @@ exports.createTeacher = (newTeacher) => {
         name: newTeacher.name,
         surname: newTeacher.surname,
         salary: newTeacher.salary,
-        hiredate: newTeacher.hiredate
+        hiredate: new Date(newTeacher.hiredate).toISOString().split("T")[0]
     });
 };
 exports.updateTeacher = (teacherId, teacherData) => {
-    const name = teacherData.name;
-    const surname = teacherData.surname;
-    const salary = teacherData.salary;
-    const hiredate = teacherData.hiredate;
+    // const name = teacherData.name;
+    // const surname = teacherData.surname;
+    // const salary = teacherData.salary;
+    // const hiredate = new Date(newTeacher.hiredate).toISOString().substr(0, 10)
     return Teacher.update(teacherData, { where: { _id: teacherId } });
 };
 

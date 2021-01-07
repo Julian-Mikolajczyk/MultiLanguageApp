@@ -1,10 +1,10 @@
 function validateForm() {
-    const teacherNameInput = document.getElementById('TeacherName');
-    const dateInput = document.getElementById('Date');
-    const startTimeInput = document.getElementById('StartTime');
-    const endTimeInput = document.getElementById('EndTime');
-    const topicInput = document.getElementById('Topic');
-    const classroomNrInput = document.getElementById('ClassroomNr');
+    const teacherNameInput = document.getElementById('teacher_id');
+    const dateInput = document.getElementById('date');
+    const startTimeInput = document.getElementById('starttime');
+    const endTimeInput = document.getElementById('endtime');
+    const topicInput = document.getElementById('topic');
+    const classroomNrInput = document.getElementById('classroomnr');
 
 
     const errorTeacherName = document.getElementById('errorTeacherName');
@@ -14,7 +14,7 @@ function validateForm() {
     const errorTopic = document.getElementById('errorTopic');
     const errorClassroomNr = document.getElementById('errorClassroomNr');
     const errorsSummary = document.getElementById('errorsSummary');
-
+    debugger;
 
     resetErrors([teacherNameInput, dateInput, startTimeInput, endTimeInput, topicInput, classroomNrInput],
         [errorTeacherName, errorDate, errorStartTime, errorEndTime, errorTopic, errorClassroomNr], errorsSummary);
@@ -26,11 +26,15 @@ function validateForm() {
         teacherNameInput.classList.add("error-input");
         errorTeacherName.innerText = "Pole jest wymagane";
     }
-
+    debugger;
     if (!checkDate(dateInput.value)) {
         valid = false;
         dateInput.classList.add("error-input");
         errorDate.innerText = "Pole jest wymagane";
+    } else if (!dateAfter(dateInput.value)) {
+        valid = false;
+        dateInput.classList.add("error-input");
+        errorDate.innerText = "Data nie może być późniejsza niż dzisiejsza";
     }
     if (!checkDropbox(startTimeInput.value)) {
         valid = false;

@@ -1,5 +1,11 @@
 const StudentRepository = require('../repository/sequelize/StudentRepository');
 
+const tmpErr = {
+    errors: [
+        { path: [""] }
+    ]
+}
+
 exports.showStudentList = (req, res, next) => {
     StudentRepository.getStudents()
         .then(studs => {
@@ -16,7 +22,8 @@ exports.showAddStudentForm = (req, res, next) => {
         formMode: 'createNew',
         btnLabel: 'Add',
         formAction: '/students/add',
-        navLocation: 'student'
+        navLocation: 'student',
+        validationErrors: tmpErr.errors
     });
 }
 exports.showStudentDetails = (req, res, next) => {
@@ -30,7 +37,8 @@ exports.showStudentDetails = (req, res, next) => {
                 formMode: 'showDetails',
                 pageTitle: 'Student Details',
                 formAction: '',
-                navLocation: 'student'
+                navLocation: 'student',
+                validationErrors: tmpErr.errors
             });
         });
 }
@@ -44,7 +52,8 @@ exports.showStudentEdit = (req, res, next) => {
                 pageTitle: 'Edit Student',
                 btnLabel: 'Edit',
                 formAction: '/students/edit',
-                navLocation: 'student'
+                navLocation: 'student',
+                validationErrors: tmpErr.errors
             });
         });
 }
@@ -53,6 +62,17 @@ exports.addStudent = (req, res, next) => {
     StudentRepository.createStudent(studData)
         .then(result => {
             res.redirect('/students');
+        })
+        .catch(err => {
+            res.render('student/form', {
+                stud: studData,
+                pageTitle: 'Add New Student',
+                formMode: 'createNew',
+                btnLabel: 'Add',
+                formAction: '/students/add',
+                navLocation: 'student',
+                validationErrors: err.errors
+            });
         });
 };
 
@@ -62,8 +82,18 @@ exports.updateStudent = (req, res, next) => {
     StudentRepository.updateStudent(studId, studData)
         .then(result => {
             res.redirect('/students');
+        }).catch(err => {
+            res.render('student/form', {
+                stud: studData,
+                formMode: 'edit',
+                pageTitle: 'Edit Student',
+                btnLabel: 'Edit',
+                formAction: '/students/edit',
+                navLocation: 'student',
+                validationErrors: err.errors
+            })
         });
-};
+}
 
 exports.deleteStudent = (req, res, next) => {
     const studId = req.params.studentId;
