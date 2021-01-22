@@ -19,6 +19,18 @@ function checkRequired(value) {
     }
     return true;
 }
+function startTimeBiggerThanEndTime(starttime, endtime) {
+    if (starttime > endtime) {
+        return true;
+    }
+    return false;
+}
+function endTimeBiggerThanStartTime(starttime, endtime) {
+    if (starttime < endtime) {
+        return true;
+    }
+    return false;
+}
 function checkDropbox(value) {
     if (value == null || value == 0) {
         return false;
@@ -39,7 +51,6 @@ function checkDate(value) {
     const pattern = /(\d{4})-(\d{2})-(\d{2})/;
 
     return pattern.test(value);
-
 
 }
 function dateAfter(value) {
@@ -85,6 +96,12 @@ function checkTextLengthRange(value, min, max) {
     }
     return true;
 }
+function haveNumbers(value) {
+    return /\d/.test(value)
+}
+function haveSpecialCharacters(value) {
+    return /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/.test(value);
+}
 function checkEmail(value) {
     if (!value) {
         return false;
@@ -98,6 +115,9 @@ function isAlpha(value) {
 }
 function isNumeric(value) {
     return /^\d+$/.test(value);
+}
+function isTime(value) {
+    return /\d{2}:\d{2}/.test(value)
 }
 // function exist(value) {
 //     const Student = require('../../model/sequelize/Student');

@@ -10,7 +10,6 @@ function validateForm() {
     const errorcheckbox = document.getElementById('errorcheckbox');
     const errorsSummary = document.getElementById('errorsSummary');
 
-    debugger;
     resetErrors([lessonInput, studentInput, checkboxInput], [errorLesson, errorStudent, errorcheckbox], errorsSummary);
     let valid = true;
 
@@ -24,16 +23,6 @@ function validateForm() {
         valid = false;
         studentInput.classList.add("error-input");
         errorStudent.innerText = "Pole jest wymagane";
-    }
-    if (!checkRequired(checkboxInput.value)) {
-        valid = false;
-        checkboxInput.classList.add("error-input");
-        errorcheckbox.innerText = "Pole musi być uzupełnione";
-    }
-    else if (!isbool(checkboxInput.value)) {
-        valid = false;
-        checkboxInput.classList.add("error-input");
-        errorcheckbox.innerText = "Pole przyjmuje tylko wartość true lub false";
     }
     if (!valid) {
         errorsSummary.innerText = "Formularz zawiera błędy";

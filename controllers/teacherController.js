@@ -61,7 +61,7 @@ exports.addTeacher = (req, res, next) => {
             res.redirect('/teachers');
         })
         .catch(err => {
-            res.render('teacher/form', {
+            res.render('teacher/Form', {
                 teach: teachData,
                 pageTitle: 'Add New Teacher',
                 formMode: 'createNew',

@@ -8,19 +8,26 @@ const Student = sequelize.define('Student', {
         allowNull: false,
         primaryKey: true,
     },
-    name: {
+    firstname: {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
             notEmpty: {
-                msg: "Pole jest wymagane"
+                msg: "<server> Pole nie może być puste"
             },
             len: {
                 args: [2, 60],
-                msg: "Pole powinno zawierać od 2 do 60 znaków"
+                msg: "<server> Pole powinno zawierać od 2 do 60 znaków"
             },
-            isAlpha: {
-                msg: "Pole moze zawierac tylko litery"
+            containsNumbers(value) {
+                if (/\d/.test(value)) {
+                    throw new Error('<server> Pole nie powinno zawierać cyfr');
+                }
+            },
+            containsSpecialChars(value) {
+                if (/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/.test(value)) {
+                    throw new Error('<server> Pole nie powinno zawierać znaków specjalnych');
+                }
             }
         }
     },
@@ -29,14 +36,21 @@ const Student = sequelize.define('Student', {
         allowNull: false,
         validate: {
             notEmpty: {
-                msg: "Pole jest wymagane"
+                msg: "<server> Pole jest wymagane"
             },
             len: {
                 args: [2, 60],
-                msg: "Pole powinno zawierać od 2 do 60 znaków"
+                msg: "<server> Pole powinno zawierać od 2 do 60 znaków"
             },
-            isAlpha: {
-                msg: "Pole moze zawierac tylko litery"
+            containsNumbers(value) {
+                if (/\d/.test(value)) {
+                    throw new Error('<server> Pole nie powinno zawierać cyfr');
+                }
+            },
+            containsSpecialChars(value) {
+                if (/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/.test(value)) {
+                    throw new Error('<server> Pole nie powinno zawierać znaków specjalnych');
+                }
             }
         }
     },
@@ -46,30 +60,36 @@ const Student = sequelize.define('Student', {
         unique: true,
         validate: {
             notEmpty: {
-                msg: "Pole jest wymagane"
+                msg: "<server> Pole jest wymagane"
             },
             len: {
                 args: [11, 11],
-                msg: "Pole powinno zawierać dokładnie 11 cyfr"
+                msg: "<server> Pole powinno zawierać dokładnie 11 cyfr"
+            },
+            isNumeric: {
+                msg: "<server> Pole powinno może składać się tylko z cyfr"
             }
         }
     },
     email: {
         type: Sequelize.STRING,
         allowNull: false,
-        unique: true,
+        unique: 'email',
         validate: {
             notEmpty: {
-                msg: "Pole jest wymagane"
+                msg: "<server> Pole jest wymagane"
             },
             len: {
                 args: [5, 60],
-                msg: "Pole powinno zawierać od 5 do 60 znaków"
+                msg: "<server> Pole powinno zawierać od 5 do 60 znaków"
             },
             isEmail: {
-                msg: 'Pole powinno zawierać prawidłowy adres email'
-            }
-        }
+                args: true,
+                msg: '<server> Pole powinno zawierać prawidłowy adres email'
+            },
+
+        },
+
     }
 
 });

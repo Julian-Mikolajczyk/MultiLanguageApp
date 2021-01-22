@@ -1,14 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const lesssonController = require('../controllers/lessonController');
+const lessonController = require('../controllers/lessonController');
 
-router.get('/', lesssonController.showLessonList);
-router.get('/add', lesssonController.showAddLessonForm);
-router.get('/details/:lessonId', lesssonController.showLessonDetails);
-router.get('/edit/:lessonId', lesssonController.showLessonEdit);
+router.get('/', lessonController.showLessonList);
+router.get('/add', lessonController.showAddLessonForm);
+router.get('/details/:lessonId', lessonController.showLessonDetails);
+router.get('/edit/:lessonId', lessonController.showLessonEdit);
 
-router.post('/add', lesssonController.addLesson);
-router.post('/edit', lesssonController.updateLesson);
-router.get('/delete/:lessonId', lesssonController.deleteLesson);
+router.post('/add', lessonController.addLesson);
+router.post('/edit', lessonController.updateLesson);
+router.get('/delete/:lessonId', lessonController.deleteLesson);
 
 module.exports = router;

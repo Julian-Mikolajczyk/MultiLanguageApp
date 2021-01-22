@@ -25,7 +25,7 @@ exports.showAddLessonForm = (req, res, next) => {
         .then(lessons => {
 
             res.render('lesson/form', {
-                lessons: {},
+                lessons: { teacher_id: '' },
                 formMode: 'createNew',
                 allteach: allteach,
                 pageTitle: 'Add Lesson',
@@ -83,13 +83,12 @@ exports.addLesson = (req, res, next) => {
     LessonRepository.createLesson(lessonData)
         .then(result => {
             res.redirect('/lessons');
-        }).catch(err => {
+        })
+        .catch(err => {
             let allteach;
             teacherRepository.getTeachers()
                 .then(teachers => {
                     allteach = teachers;
-                })
-                .then(lessons => {
                     res.render('lesson/form', {
                         lessons: lessonData,
                         formMode: 'createNew',
@@ -106,10 +105,12 @@ exports.addLesson = (req, res, next) => {
 exports.updateLesson = (req, res, next) => {
     const lessonId = req.body._id;
     const lessData = { ...req.body };
+    console.log(lessData)
     LessonRepository.updateLesson(lessonId, lessData)
         .then(result => {
             res.redirect('/lessons');
-        }).catch(err => {
+        })
+        .catch(err => {
             let allteach;
             const lessonId = req.params.lessonId;
             teacherRepository.getTeachers()

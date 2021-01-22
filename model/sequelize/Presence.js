@@ -13,7 +13,7 @@ const Presence = sequelize.define('Presence', {
         allowNull: false,
         validate: {
             notEmpty: {
-                msg: "Pole jest wymagane"
+                msg: "<server> Pole jest wymagane"
             }
         }
     },
@@ -22,7 +22,7 @@ const Presence = sequelize.define('Presence', {
         allowNull: false,
         validate: {
             notEmpty: {
-                msg: "Pole jest wymagane"
+                msg: "<server> Pole jest wymagane"
             }
         }
     },
@@ -31,8 +31,12 @@ const Presence = sequelize.define('Presence', {
         allowNull: false,
         validate: {
             notEmpty: {
-                msg: "Pole jest wymagane"
-            }
+                msg: "<server> Pole jest wymagane"
+            },
+            // isIn: {
+            //     args: [['true', 'false']],
+            //     msg: "<server> Pole przyjmuje tylko wartość true lub false"
+            // }
         }
     },
     absenceReason: {

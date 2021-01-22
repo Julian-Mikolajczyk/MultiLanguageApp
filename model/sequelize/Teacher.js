@@ -8,19 +8,26 @@ const Teacher = sequelize.define('Teacher', {
         allowNull: false,
         primaryKey: true,
     },
-    name: {
+    firstname: {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
             notEmpty: {
-                msg: "Pole jest wymagane"
+                msg: "<server> Pole jest wymagane"
             },
             len: {
                 args: [2, 60],
-                msg: "Pole powinno zawierać od 2 do 60 znaków"
+                msg: "<server> Pole powinno zawierać od 2 do 60 znaków"
             },
-            isAlpha: {
-                msg: "Pole moze zawierac tylko litery"
+            containsNumbers(value) {
+                if (/\d/.test(value)) {
+                    throw new Error('<server> Pole nie powinno zawierać cyfr');
+                }
+            },
+            containsSpecialChars(value) {
+                if (/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/.test(value)) {
+                    throw new Error('<server> Pole nie powinno zawierać znaków specjalnych');
+                }
             }
         }
     },
@@ -29,14 +36,21 @@ const Teacher = sequelize.define('Teacher', {
         allowNull: false,
         validate: {
             notEmpty: {
-                msg: "Pole jest wymagane"
+                msg: "<server> Pole jest wymagane"
             },
             len: {
                 args: [2, 60],
-                msg: "Pole powinno zawierać od 2 do 60 znaków"
+                msg: "<server> Pole powinno zawierać od 2 do 60 znaków"
             },
-            isAlpha: {
-                msg: "Pole moze zawierac tylko litery"
+            containsNumbers(value) {
+                if (/\d/.test(value)) {
+                    throw new Error('<server> Pole nie powinno zawierać cyfr');
+                }
+            },
+            containsSpecialChars(value) {
+                if (/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/.test(value)) {
+                    throw new Error('<server> Pole nie powinno zawierać znaków specjalnych');
+                }
             }
         }
     },
@@ -45,14 +59,14 @@ const Teacher = sequelize.define('Teacher', {
         allowNull: false,
         validate: {
             notEmpty: {
-                msg: "Pole jest wymagane"
+                msg: "<server> Pole jest wymagane"
             },
             len: {
                 args: [2, 6],
-                msg: "Pole powinno zawierać od 2 do 6 liczb"
+                msg: "<server> Pole powinno zawierać od 2 do 6 liczb"
             },
             isInt: {
-                msg: "Pole może być tylko liczbą"
+                msg: "<server> Pole może być tylko liczbą"
             }
         }
     },
@@ -61,11 +75,34 @@ const Teacher = sequelize.define('Teacher', {
         allowNull: false,
         validate: {
             notEmpty: {
-                msg: "Pole jest wymagane"
+                msg: "<server> Pole jest wymagane"
             },
             isDate: {
-                msg: "Pole może być tylko datą"
+                msg: "<server> Pole może być tylko datą"
+            },
+            dateAfter(value) {
+                var d = new Date(),
+                    month = '' + (d.getMonth() + 1),
+                    day = '' + d.getDate(),
+                    year = d.getFullYear();
+
+                if (month.length < 2)
+                    month = '0' + month;
+                if (day.length < 2)
+                    day = '0' + day;
+
+                let date = [year, month, day].join('-');
+                const pattern = /(\d{4})-(\d{2})-(\d{2})/;
+                if (!pattern.test(date)) {
+                    throw new Error('<server> Pole nie jest poprawna datą');
+                }
+                const valueDate = new Date(value);
+                const compareToDate = new Date(d);
+                if (valueDate.getTime() > compareToDate.getTime()) {
+                    throw new Error('<server> Data nie może być późniejsza niż dzisiejsza');
+                }
             }
+
         }
     }
 

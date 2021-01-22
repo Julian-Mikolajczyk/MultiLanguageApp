@@ -27,7 +27,7 @@ exports.showAddPresenceForm = (req, res, next) => {
         .then(lessons => {
             alllessons = lessons;
             res.render('presence/form', {
-                pres: {},
+                pres: { lesson_id: "", student_id: "" },
                 formMode: 'createNew',
                 alllessons: alllessons,
                 allStudents: allStudents,
@@ -87,6 +87,11 @@ exports.showPresenceEdit = (req, res, next) => {
 }
 exports.addPresence = (req, res, next) => {
     const presenceData = { ...req.body };
+    if (!presenceData.isabsent) {
+        presenceData.isabsent = false;
+    } else {
+        presenceData.isabsent = true;
+    }
     PresenceRepository.createPresence(presenceData)
         .then(result => {
             res.redirect('/presences');
@@ -117,6 +122,11 @@ exports.updatePresence = (req, res, next) => {
     // console.log({ ...req.body });
     const presenceId = req.body._id;
     const pressData = { ...req.body };
+    if (!pressData.isabsent) {
+        pressData.isabsent = false;
+    } else {
+        pressData.isabsent = true;
+    }
     PresenceRepository.updatePresence(presenceId, pressData)
         .then(result => {
             res.redirect('/presences');
@@ -134,7 +144,7 @@ exports.updatePresence = (req, res, next) => {
                 })
                 .then(pres => {
                     res.render('presence/form', {
-                        pres: presenceData,
+                        pres: pressData,
                         formMode: 'edit',
                         alllessons: alllessons,
                         allStudents: allStudents,

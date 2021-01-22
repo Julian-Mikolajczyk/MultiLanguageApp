@@ -14,7 +14,6 @@ function validateForm() {
     const errorTopic = document.getElementById('errorTopic');
     const errorClassroomNr = document.getElementById('errorClassroomNr');
     const errorsSummary = document.getElementById('errorsSummary');
-    debugger;
 
     resetErrors([teacherNameInput, dateInput, startTimeInput, endTimeInput, topicInput, classroomNrInput],
         [errorTeacherName, errorDate, errorStartTime, errorEndTime, errorTopic, errorClassroomNr], errorsSummary);
@@ -26,25 +25,42 @@ function validateForm() {
         teacherNameInput.classList.add("error-input");
         errorTeacherName.innerText = "Pole jest wymagane";
     }
-    debugger;
     if (!checkDate(dateInput.value)) {
         valid = false;
         dateInput.classList.add("error-input");
         errorDate.innerText = "Pole jest wymagane";
-    } else if (!dateAfter(dateInput.value)) {
-        valid = false;
-        dateInput.classList.add("error-input");
-        errorDate.innerText = "Data nie może być późniejsza niż dzisiejsza";
     }
     if (!checkDropbox(startTimeInput.value)) {
         valid = false;
         startTimeInput.classList.add("error-input");
         errorStartTime.innerText = "Pole jest wymagane";
     }
+
+    if (!isTime(startTimeInput.value)) {
+        valid = false;
+        startTimeInput.classList.add("error-input");
+        errorStartTime.innerText = "Pole powinno być w formacie hh:mm";
+    }
+    if (startTimeBiggerThanEndTime(startTimeInput.value, endTimeInput.value)) {
+        valid = false;
+        startTimeInput.classList.add("error-input");
+        errorStartTime.innerText = "Pole powinno zawierać czas wcześniejszy niż czas zakończenia lekcji";
+    }
     if (!checkDropbox(endTimeInput.value)) {
         valid = false;
         endTimeInput.classList.add("error-input");
         errorEndTime.innerText = "Pole jest wymagane";
+    }
+    if (!isTime(endTimeInput.value)) {
+        valid = false;
+        endTimeInput.classList.add("error-input");
+        errorEndTime.innerText = "Pole powinno być w formacie hh:mm";
+    }
+    debugger;
+    if (!endTimeBiggerThanStartTime(startTimeInput.value, endTimeInput.value)) {
+        valid = false;
+        endTimeInput.classList.add("error-input");
+        errorEndTime.innerText = "Pole powinno zawierać czas późniejszy niż czas rozpoczęcia lekcji";
     }
     if (!checkRequired(topicInput.value)) {
         valid = false;

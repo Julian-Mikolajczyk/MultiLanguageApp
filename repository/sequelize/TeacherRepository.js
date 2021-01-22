@@ -18,11 +18,13 @@ exports.getTeacherById = (teacherId) => {
 };
 
 exports.createTeacher = (newTeacher) => {
+    date = new Date(newTeacher.hiredate);
+    //date.toISOString().split("T")[0]
     return Teacher.create({
-        name: newTeacher.name,
+        firstname: newTeacher.firstname,
         surname: newTeacher.surname,
         salary: newTeacher.salary,
-        hiredate: new Date(newTeacher.hiredate).toISOString().split("T")[0]
+        hiredate: newTeacher.hiredate
     });
 };
 exports.updateTeacher = (teacherId, teacherData) => {

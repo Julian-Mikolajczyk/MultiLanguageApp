@@ -23,9 +23,9 @@ module.exports = () => {
         .then(stud => {
             if (!stud || stud.length == 0) {
                 return Student.bulkCreate([
-                    { name: 'Jan', surname: 'Kowalski', PESEL: '30129905052', email: 'jan.kowalski@gmail.com' },
-                    { name: 'Adam', surname: 'Zieliński', PESEL: '30129912345', email: 'adam.zielinski@gmail.com' },
-                    { name: 'Kuba', surname: 'Polak', PESEL: '30129923456', email: 'kuba.polak@gmail.com' }
+                    { firstname: 'Jan', surname: 'Kowalski', PESEL: '30129905052', email: 'jan.kowalski@gmail.com' },
+                    { firstname: 'Adam', surname: 'Zieliński', PESEL: '30129912345', email: 'adam.zielinski@gmail.com' },
+                    { firstname: 'Kuba', surname: 'Polak', PESEL: '30129923456', email: 'kuba.polak@gmail.com' }
                 ])
                     .then(() => {
                         return Student.findAll();
@@ -42,9 +42,9 @@ module.exports = () => {
         .then(teach => {
             if (!teach || teach.length == 0) {
                 return Teacher.bulkCreate([
-                    { name: 'Kamil', surname: 'Kowalski', salary: '1111', hiredate: '2019-10-10' },
-                    { name: 'Elżbieta', surname: 'Zieliński', salary: '2222', hiredate: '2018-07-03' },
-                    { name: 'Piotr', surname: 'Pazio', salary: '3333', hiredate: '2017-04-03' }
+                    { firstname: 'Kamil', surname: 'Kowalski', salary: '1111', hiredate: '2019-10-10' },
+                    { firstname: 'Elżbieta', surname: 'Zieliński', salary: '2222', hiredate: '2018-07-03' },
+                    { firstname: 'Piotr', surname: 'Pazio', salary: '3333', hiredate: '2017-04-03' }
                 ])
                     .then(() => {
                         return Teacher.findAll();

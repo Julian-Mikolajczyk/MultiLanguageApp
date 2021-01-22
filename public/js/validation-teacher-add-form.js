@@ -1,5 +1,5 @@
 function validateForm() {
-    const firstNameInput = document.getElementById('name');
+    const firstNameInput = document.getElementById('firstname');
     const lastNameInput = document.getElementById('surname');
     const salaryInput = document.getElementById('salary');
     const hireDateInput = document.getElementById('hiredate');
@@ -24,6 +24,16 @@ function validateForm() {
         firstNameInput.classList.add("error-input");
         errorFirstName.innerText = "Pole powinno zawierać od 2 do 100 znaków";
     }
+    else if (haveNumbers(firstNameInput.value)) {
+        valid = false;
+        firstNameInput.classList.add("error-input");
+        errorFirstName.innerText = "Pole nie powinno zawierać cyfr";
+    }
+    else if (haveSpecialCharacters(firstNameInput.value)) {
+        valid = false;
+        firstNameInput.classList.add("error-input");
+        errorFirstName.innerText = "Pole nie może zawierać znaków specjalnych";
+    }
     // else if (!isAlpha(firstNameInput.value)) {
     //     valid = false;
     //     firstNameInput.classList.add("error-input");
@@ -38,6 +48,16 @@ function validateForm() {
         valid = false;
         lastNameInput.classList.add("error-input");
         errorLastName.innerText = "Pole powinno zawierać od 2 do 100 znaków";
+    }
+    else if (haveNumbers(lastNameInput.value)) {
+        valid = false;
+        lastNameInput.classList.add("error-input");
+        errorLastName.innerText = "Pole nie powinno zawierać cyfr";
+    }
+    else if (haveSpecialCharacters(lastNameInput.value)) {
+        valid = false;
+        lastNameInput.classList.add("error-input");
+        errorLastName.innerText = "Pole nie może zawierać znaków specjalnych";
     }
     // else if (!isAlpha(lastNameInput.value)) {
     //     valid = false;

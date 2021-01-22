@@ -64,6 +64,14 @@ exports.addStudent = (req, res, next) => {
             res.redirect('/students');
         })
         .catch(err => {
+            err.errors.forEach(e => {
+                if (e.path.includes('email') && e.type == 'unique violation') {
+                    e.message = "Podany adres email jest już używany";
+                }
+                if (e.path.includes('PESEL') && e.type == 'unique violation') {
+                    e.message = "Taki PESEL już istnieje w bazie danych";
+                }
+            });
             res.render('student/form', {
                 stud: studData,
                 pageTitle: 'Add New Student',
@@ -72,7 +80,8 @@ exports.addStudent = (req, res, next) => {
                 formAction: '/students/add',
                 navLocation: 'student',
                 validationErrors: err.errors
-            });
+            })
+
         });
 };
 
@@ -91,7 +100,7 @@ exports.updateStudent = (req, res, next) => {
                 formAction: '/students/edit',
                 navLocation: 'student',
                 validationErrors: err.errors
-            })
+            });
         });
 }
 
@@ -102,3 +111,5 @@ exports.deleteStudent = (req, res, next) => {
             res.redirect('/students');
         });
 };
+
+

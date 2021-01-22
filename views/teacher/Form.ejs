@@ -7,17 +7,17 @@
             <%= pageTitle %>
         </h2>
         <!-- onsubmit="return validateForm();" -->
-        <form class="form" method="post" action="<%=formAction%>" novalidate onsubmit="return validateForm();"
-            <%=(formMode=='createNew' ) ? 'style=justify-content:center;' : 'style=justify-content:left;' %> />
+        <form class="form" method="post" action="<%=formAction%>" novalidate <%=(formMode=='createNew' )
+            ? 'style=justify-content:center;' : 'style=justify-content:left;' %> />
 
             <input type="hidden" name="_id" value="<%= teach._id %>">
             <label for="name">Name:</label>
-            <input class="<%= validationErrors.find(e => e.path.includes('name')) ? 'error-input' : '' %>" type="text"
-                name="name" id="name" placeholder="2-60 znaków" value="<%= teach.name %>" <%=(formMode=='showDetails' )
-                ? 'disabled' : '' %>/>
+            <input class="<%= validationErrors.find(e => e.path.includes('firstname')) ? 'error-input' : '' %>"
+                type="text" name="firstname" id="firstname" placeholder="2-60 znaków" value="<%= teach.firstname %>"
+                <%=(formMode=='showDetails' ) ? 'disabled' : '' %>/>
             <span id="errorFirstName" class="errors-text">
-                <% if (validationErrors.find(e=> e.path.includes('name'))) { %>
-                    <%= validationErrors.find(e=> e.path.includes('name')).message %>
+                <% if (validationErrors.find(e=> e.path.includes('firstname'))) { %>
+                    <%= validationErrors.find(e=> e.path.includes('firstname')).message %>
                         <% } %>
             </span>
             <label for="surname">Surname:</label>
@@ -31,39 +31,48 @@
             </span>
             <label for="salary">Salary:</label>
             <input class="<%= validationErrors.find(e => e.path.includes('salary')) ? 'error-input' : '' %>" type="text"
-                name="salary" id="salary" value="<%= teach.salary %>" <%=(formMode=='showDetails' ) ? 'disabled' : '' %>
-            />
+                name="salary" id="salary" value="<%= teach.salary %>" <%=(formMode=='showDetails' ) ? 'disabled' : ''
+                %>/>
             <span id="errorSalary" class="errors-text">
                 <% if (validationErrors.find(e=> e.path.includes('salary'))) { %>
                     <%= validationErrors.find(e=> e.path.includes('salary')).message %>
                         <% } %>
             </span>
             <label for="hiredate">HireDate:</label>
-            <input class="<%= validationErrors.find(e => e.path.includes('hiredate')) ? 'error-input' : '' %>"
-                type="date" name="hiredate" id="hiredate"
-                value="<%= teach.hiredate? teach.hiredate.toISOString().split('T')[0] : '' %>"
-                <%=(formMode=='showDetails' ) ? 'disabled' : '' %> />
-            <span id="errorDate" class="errors-text">
-                <% if (validationErrors.find(e=> e.path.includes('hiredate'))) { %>
-                    <%= validationErrors.find(e=> e.path.includes('hiredate')).message %>
+            <% if (formMode=='createNew' ) { %>
+                <input class="<%= validationErrors.find(e => e.path.includes('hiredate')) ? 'error-input' : '' %>"
+                    type="date" name="hiredate" id="hiredate" value="<%= teach.hiredate%>" <%=(formMode=='showDetails' )
+                    ? 'disabled' : '' %> />
+                <% } %>
+                    <% if (formMode=='showDetails' || formMode=='edit' ) { %>
+                        <input
+                            class="<%= validationErrors.find(e => e.path.includes('hiredate')) ? 'error-input' : '' %>"
+                            type="date" name="hiredate" id="hiredate"
+                            value="<%= new Date(teach.hiredate).toISOString().split('T')[0] %>"
+                            <%=(formMode=='showDetails' ) ? 'disabled' : '' %> />
                         <% } %>
 
-            </span>
-            <p id="errorsSummary" style="margin-block-start: 0em;
+                            <span id="errorDate" class="errors-text">
+                                <% if (validationErrors.find(e=> e.path.includes('hiredate'))) { %>
+                                    <%= validationErrors.find(e=> e.path.includes('hiredate')).message %>
+                                        <% } %>
+
+                            </span>
+                            <p id="errorsSummary" style="margin-block-start: 0em;
             margin-block-end: 0em;" class="errors-text"></p>
-            <% if (formMode !='showDetails' ) { %>
-                <div class="form-buttons">
-                    <input class="form-button-submit" type="submit" value="<%=btnLabel%>" />
-                    <a class="form-button-cancel" href="/teachers">Back</a>
-                </div>
-                <% } else { %>
-                    <div class="form-buttons">
-                        <a href="/teachers/edit/<%= teach._id %>" class="form-button-submit">Edit</a>
-                        <a class="form-button-cancel" href="/teachers">Back</a>
-                    </div>
-                    <% } %>
+                            <% if (formMode !='showDetails' ) { %>
+                                <div class="form-buttons">
+                                    <input class="form-button-submit" type="submit" value="<%=btnLabel%>" />
+                                    <a class="form-button-cancel" href="/teachers">Back</a>
+                                </div>
+                                <% } else { %>
+                                    <div class="form-buttons">
+                                        <a href="/teachers/edit/<%= teach._id %>" class="form-button-submit">Edit</a>
+                                        <a class="form-button-cancel" href="/teachers">Back</a>
+                                    </div>
+                                    <% } %>
         </form>
-        <% if (formMode=='showDetails' || formMode=='edit' ) { %>
+        <% if (formMode=='showDetails' ) { %>
             <h2>Teacher Lessons</h2>
 
             <table class="presences-table" style="min-width: 40%;">

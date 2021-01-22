@@ -7,19 +7,22 @@
             <%= pageTitle %>
         </h2>
         <!-- onsubmit="return validateForm();" -->
-        <form class="form" method="post" action="<%=formAction%>" novalidate onsubmit="return validateForm();"
-            <%=(formMode=='createNew' ) ? 'style=justify-content:center;' : 'style=justify-content:left;' %> />
+        <form class="form" method="post" action="<%=formAction%>" novalidate <%=(formMode=='createNew' )
+            ? 'style=justify-content:center;' : 'style=justify-content:left;' %> />
 
             <input type="hidden" name="_id" value="<%= lessons._id %>">
-
 
             <label for="teacher_id">Teacher Name:</label>
             <select class="<%= validationErrors.find(e => e.path.includes('teacher_id')) ? 'error-input' : '' %>"
                 id="teacher_id" name="teacher_id" required <%=(formMode=='showDetails' ) ? 'disabled' : '' %> >
-                <option value="" selected>--- Select the Teacher ---</option>
+                <option value="">--- Select the Teacher ---</option>
                 <% for (let i=0; i<allteach.length; i++) { let teach=allteach[i]; %>
-                    <option value="<%= teach._id %>" label="<%= teach.name + ' ' + teach.surname %>" <%=(lessons._id &&
-                        teach._id.toString()==lessons.teacher_id.toString()) ? 'selected' : '' %>></option>
+
+                    <option value="<%= teach._id %>" label="<%= teach.firstname + ' ' + teach.surname %>"
+                        <%=(lessons._id && teach._id.toString()==lessons.teacher_id.toString()) ? 'selected' : '' %>
+                        <%=(Array.isArray(validationErrors) && validationErrors.length && formMode=='createNew' &&
+                            teach._id.toString()==lessons.teacher_id.toString()) ? 'selected' : '' %>>
+                    </option>
                     <% } %>
             </select>
             <span id="errorTeacherName" class="errors-text">
@@ -28,70 +31,87 @@
                         <% } %>
             </span>
             <label for="date">Date:</label>
-            <input class="<%= validationErrors.find(e => e.path.includes('date')) ? 'error-input' : '' %>" type="date"
-                name="date" id="date" value="<%=lessons.date ? lessons.date.toISOString().split('T')[0] : ''  %>"
-                <%=(formMode=='showDetails' ) ? 'disabled' : '' %>/>
-            <span id="errorDate" class="errors-text">
-                <% if (validationErrors.find(e=> e.path.includes('date'))) { %>
-                    <%= validationErrors.find(e=> e.path.includes('date')).message %>
+            <!-- <%= lessons.date ? 'lessons.date.toISOString().split(`T`)[0]' : 'lessons.date' %> -->
+            <!-- ? lessons.date.toISOString().split('T')[0] : ''   -->
+            <!-- dodac ifa na poczatku i zrobic dwa rozne inputy dla kazdej z wersji -->
+            <% if (formMode=='createNew' ) { %>
+                <input value="<%=lessons.date%>"
+                    class="<%= validationErrors.find(e=> e.path.includes('date')) ? 'error-input' : '' %>" type="date"
+                    name="date" id="date" <%=(formMode=='showDetails' ) ? 'disabled' : '' %>/>
+                <% } %>
+                    <% if (formMode=='showDetails' || formMode=='edit' ) { %>
+                        <input value="<%= new Date(lessons.date).toISOString().split('T')[0] %>"
+                            class="<%= validationErrors.find(e=> e.path.includes('date')) ? 'error-input' : '' %>"
+                            type="date" name="date" id="date" <%=(formMode=='showDetails' ) ? 'disabled' : '' %>/>
                         <% } %>
-            </span>
+                            <!-- <input value=""
+                        class="<%= validationErrors.find(e=> e.path.includes('date')) ? 'error-input' : '' %>"
+                        type="date" name="date" id="date" <%=(formMode=='showDetails' ) ? 'disabled' : '' %>/> -->
+                            <span id="errorDate" class="errors-text">
+                                <% if (validationErrors.find(e=> e.path.includes('date'))) { %>
+                                    <%= validationErrors.find(e=> e.path.includes('date')).message %>
+                                        <% } %>
+                            </span>
 
-            <label for="starttime">Start Time:</label>
-            <input class="<%= validationErrors.find(e => e.path.includes('starttime')) ? 'error-input' : '' %>"
-                type="text" name="starttime" id="starttime" placeholder="eg. 10:15" value="<%= lessons.starttime %>"
-                <%=(formMode=='showDetails' ) ? 'disabled' : '' %>/>
-            <span id="errorStartTime" class="errors-text">
-                <% if (validationErrors.find(e=> e.path.includes('starttime'))) { %>
-                    <%= validationErrors.find(e=> e.path.includes('starttime')).message %>
-                        <% } %>
-            </span>
+                            <label for="starttime">Start Time:</label>
+                            <input
+                                class="<%= validationErrors.find(e => e.path.includes('starttime')) ? 'error-input' : '' %>"
+                                type="time" name="starttime" id="starttime" placeholder="eg. 10:15"
+                                value="<%= lessons.starttime %>" <%=(formMode=='showDetails' ) ? 'disabled' : '' %>/>
+                            <span id="errorStartTime" class="errors-text">
+                                <% if (validationErrors.find(e=> e.path.includes('starttime'))) { %>
+                                    <%= validationErrors.find(e=> e.path.includes('starttime')).message %>
+                                        <% } %>
+                            </span>
 
-            <label for="endtime">End Time:</label>
-            <input class="<%= validationErrors.find(e => e.path.includes('endtime')) ? 'error-input' : '' %>"
-                type="text" name="endtime" id="endtime" placeholder="eg. 11:45" value="<%= lessons.endtime %>"
-                <%=(formMode=='showDetails' ) ? 'disabled' : '' %>/>
-            <span id="errorEndTime" class="errors-text">
-                <% if (validationErrors.find(e=> e.path.includes('endtime'))) { %>
-                    <%= validationErrors.find(e=> e.path.includes('endtime')).message %>
-                        <% } %>
-            </span>
+                            <label for="endtime">End Time:</label>
+                            <input
+                                class="<%= validationErrors.find(e => e.path.includes('endtime')) ? 'error-input' : '' %>"
+                                type="time" name="endtime" id="endtime" placeholder="eg. 11:45"
+                                value="<%= lessons.endtime %>" <%=(formMode=='showDetails' ) ? 'disabled' : '' %>/>
+                            <span id="errorEndTime" class="errors-text">
+                                <% if (validationErrors.find(e=> e.path.includes('endtime'))) { %>
+                                    <%= validationErrors.find(e=> e.path.includes('endtime')).message %>
+                                        <% } %>
+                            </span>
 
-            <label for="topic">Topic:</label>
-            <input class="<%= validationErrors.find(e => e.path.includes('topic')) ? 'error-input' : '' %>" type="text"
-                name="topic" id="topic" placeholder="eg. Verbs" value="<%= lessons.topic %>" <%=(formMode=='showDetails'
-                ) ? 'disabled' : '' %> />
-            <span id="errorTopic" class="errors-text">
-                <% if (validationErrors.find(e=> e.path.includes('topic'))) { %>
-                    <%= validationErrors.find(e=> e.path.includes('topic')).message %>
-                        <% } %>
-            </span>
+                            <label for="topic">Topic:</label>
+                            <input
+                                class="<%= validationErrors.find(e => e.path.includes('topic')) ? 'error-input' : '' %>"
+                                type="text" name="topic" id="topic" placeholder="eg. Verbs" value="<%= lessons.topic %>"
+                                <%=(formMode=='showDetails' ) ? 'disabled' : '' %> />
+                            <span id="errorTopic" class="errors-text">
+                                <% if (validationErrors.find(e=> e.path.includes('topic'))) { %>
+                                    <%= validationErrors.find(e=> e.path.includes('topic')).message %>
+                                        <% } %>
+                            </span>
 
-            <label for="classroomnr">Classroom Nr:</label>
-            <input class="<%= validationErrors.find(e => e.path.includes('classroomnr')) ? 'error-input' : '' %>"
-                type="email" name="classroomnr" id="classroomnr" placeholder="eg. 2B" value="<%= lessons.classroomnr %>"
-                <%=(formMode=='showDetails' ) ? 'disabled' : '' %> />
-            <span id="errorClassroomNr" class="errors-text">
-                <% if (validationErrors.find(e=> e.path.includes('classroomnr'))) { %>
-                    <%= validationErrors.find(e=> e.path.includes('classroomnr')).message %>
-                        <% } %>
-            </span>
+                            <label for="classroomnr">Classroom Nr:</label>
+                            <input
+                                class="<%= validationErrors.find(e => e.path.includes('classroomnr')) ? 'error-input' : '' %>"
+                                type="email" name="classroomnr" id="classroomnr" placeholder="eg. 2B"
+                                value="<%= lessons.classroomnr %>" <%=(formMode=='showDetails' ) ? 'disabled' : '' %> />
+                            <span id="errorClassroomNr" class="errors-text">
+                                <% if (validationErrors.find(e=> e.path.includes('classroomnr'))) { %>
+                                    <%= validationErrors.find(e=> e.path.includes('classroomnr')).message %>
+                                        <% } %>
+                            </span>
 
-            <p id="errorsSummary" style="margin-block-start: 0em;
+                            <p id="errorsSummary" style="margin-block-start: 0em;
             margin-block-end: 0em;" class="errors-text"></p>
-            <% if (formMode !='showDetails' ) { %>
-                <div class="form-buttons">
-                    <input class="form-button-submit" type="submit" value="<%=btnLabel%>" />
-                    <a class="form-button-cancel" href="/Lessons">Back</a>
-                </div>
-                <% } else { %>
-                    <div class="form-buttons">
-                        <a href="/lessons/edit/<%= lessons._id %>" class="form-button-submit">Edit</a>
-                        <a class="form-button-cancel" href="/Lessons">Back</a>
-                    </div>
-                    <% } %>
+                            <% if (formMode !='showDetails' ) { %>
+                                <div class="form-buttons">
+                                    <input class="form-button-submit" type="submit" value="<%=btnLabel%>" />
+                                    <a class="form-button-cancel" href="/Lessons">Back</a>
+                                </div>
+                                <% } else { %>
+                                    <div class="form-buttons">
+                                        <a href="/lessons/edit/<%= lessons._id %>" class="form-button-submit">Edit</a>
+                                        <a class="form-button-cancel" href="/Lessons">Back</a>
+                                    </div>
+                                    <% } %>
         </form>
-        <% if (formMode=='showDetails' || formMode=='edit' ) { %>
+        <% if (formMode=='showDetails' ) { %>
             <h2>Teacher's Details</h2>
             <table class="presences-table">
                 <thead class="table-nav">
@@ -104,7 +124,7 @@
                 <tbody>
                     <tr class="table-body">
                         <td class="presences-table-cell">
-                            <%= lessons.teacher.name%>
+                            <%= lessons.teacher.firstname%>
                         </td>
                         <td class="presences-table-cell">
                             <%= lessons.teacher.surname%>
@@ -119,7 +139,7 @@
                     <tr>
                         <th class="table-nav-cell">Student's Name</th>
                         <th class="table-nav-cell">Student's Surname</th>
-                        <th class="table-nav-cell">Was Present</th>
+                        <th class="table-nav-cell">Was Absent</th>
                         <th class="table-nav-cell">Reason</th>
 
                     </tr>
@@ -128,7 +148,7 @@
                     <% for (let l of lessons.presences) { %>
                         <tr class="table-body">
                             <td class="presences-table-cell">
-                                <%= l.student.name %>
+                                <%= l.student.firstname %>
                             </td>
                             <td class="presences-table-cell">
                                 <%= l.student.surname %>

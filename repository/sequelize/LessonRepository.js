@@ -35,9 +35,10 @@ exports.getLessonById = (lessonId) => {
 };
 
 exports.createLesson = (newLesson) => {
+    //date.toISOString().split("T")[0]
     return Lesson.create({
         teacher_id: newLesson.teacher_id,
-        date: new Date(newLesson.date).toISOString().split("T")[0],
+        date: newLesson.date,
         starttime: newLesson.starttime,
         endtime: newLesson.endtime,
         topic: newLesson.topic,

@@ -7,17 +7,17 @@
             <%= pageTitle %>
         </h2>
         <!-- onsubmit="return validateForm();" -->
-        <form class="form" method="post" action="<%=formAction%>" novalidate onsubmit="return validateForm();"
-            <%=(formMode=='createNew' ) ? 'style=justify-content:center;' : 'style=justify-content:left;' %> />
+        <form class="form" method="post" action="<%=formAction%>" novalidate <%=(formMode=='createNew' )
+            ? 'style=justify-content:center;' : 'style=justify-content:left;' %> />
 
             <input type="hidden" name="_id" value="<%= stud._id %>">
-            <label for="name">Name:</label>
-            <input class="<%= validationErrors.find(e => e.path.includes('name')) ? 'error-input' : '' %>" type="text"
-                name="name" id="name" placeholder="2-60 znaków" value="<%= stud.name %>" <%=(formMode=='showDetails' )
-                ? 'disabled' : '' %>/>
+            <label for="firstname">Name:</label>
+            <input class="<%= validationErrors.find(e => e.path.includes('firstname')) ? 'error-input' : '' %>"
+                type="text" name="firstname" id="firstname" placeholder="2-60 znaków" value="<%= stud.firstname %>"
+                <%=(formMode=='showDetails' ) ? 'disabled' : '' %>/>
             <span id="errorFirstName" class="errors-text">
-                <% if (validationErrors.find(e=> e.path.includes('name'))) { %>
-                    <%= validationErrors.find(e=> e.path.includes('name')).message %>
+                <% if (validationErrors.find(e=> e.path.includes('firstname'))) { %>
+                    <%= validationErrors.find(e=> e.path.includes('firstname')).message %>
                         <% } %>
             </span>
             <label for="surname">Surname:</label>
@@ -50,7 +50,7 @@
             margin-block-end: 0em;" class="errors-text"></p>
             <% if (formMode !='showDetails' ) { %>
                 <div class="form-buttons">
-                    <input class="form-button-submit" type="submit" value="<%=btnLabel%>" />
+                    <input class="form-button-submit" type="submit" value="<%=btnLabel %>" />
                     <a class="form-button-cancel" href="/students">Back</a>
                 </div>
                 <% } else { %>
@@ -60,7 +60,7 @@
                     </div>
                     <% } %>
         </form>
-        <% if (formMode=='showDetails' || formMode=='edit' ) { %>
+        <% if (formMode=='showDetails' ) { %>
             <h2>Student Presences</h2>
 
             <table class="presences-table" style="min-width: 40%;">

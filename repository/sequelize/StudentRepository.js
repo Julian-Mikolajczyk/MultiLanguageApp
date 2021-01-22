@@ -24,14 +24,14 @@ exports.getStudentById = (studentId) => {
 
 exports.createStudent = (newStudent) => {
     return Student.create({
-        name: newStudent.name,
+        firstname: newStudent.firstname,
         surname: newStudent.surname,
         PESEL: newStudent.PESEL,
         email: newStudent.email
     });
 };
 exports.updateStudent = (studentId, studentData) => {
-    const name = studentData.name;
+    const firstname = studentData.firstname;
     const surname = studentData.surname;
     const PESEL = studentData.PESEL;
     const email = studentData.email;
